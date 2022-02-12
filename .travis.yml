@@ -1,7 +1,3 @@
 language: csharp
+solution: DIContainer.sln
 dotnet: netcoreapp3.1
-install:
-  - nuget restore DIContainer.sln
-  - nuget install xunit.runners -Version 2.4.1 -OutputDirectory testrunner
-script:
-  - msbuild /p:Configuration=Release DIContainer.sln
