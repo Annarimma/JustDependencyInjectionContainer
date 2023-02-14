@@ -1,10 +1,10 @@
 using DIContainer.Core.Implementation;
+using DIContainer.Tests.Abstractions;
 using DIContainer.Tests.Models;
-using DIContainer.Tests.Models.Abstraction;
 using FluentAssertions;
 using Xunit;
 
-namespace DIContainer.Tests
+namespace DIContainer.Tests.ContainerTests
 {
     public class ContainerTests
     {
@@ -13,11 +13,11 @@ namespace DIContainer.Tests
         {
             var container = new ContainerBuilder();
             container
-                .AddSingleton<IFirstService, FirstService>()
+                .AddSingleton<IPersonService, PersonService>()
                 .AddSingleton<IRandomGuidService, RandomGuidService>()
-                .AddSingleton<ISecondService, SecondService>()
+                .AddSingleton<ICarService, CarService>()
                 .Build()
-                .GetInstance<ISecondService>()
+                .GetInstance<ICarService>()
                 .Should()
                 .NotBeNull();
         }
@@ -29,14 +29,14 @@ namespace DIContainer.Tests
 
             var generatedContainer = containerBuilder
                 .AddSingleton<IRandomGuidService, RandomGuidService>()
-                .AddSingleton<IFirstService, FirstService>()
-                .AddSingleton<ISecondService, SecondService>()
+                .AddSingleton<IPersonService, PersonService>()
+                .AddSingleton<ICarService, CarService>()
                 .Build();
             
-            var expectedEntity = generatedContainer.GetInstance<ISecondService>();
+            var expectedEntity = generatedContainer.GetInstance<ICarService>();
             
             generatedContainer
-                .GetInstance<ISecondService>()
+                .GetInstance<ICarService>()
                 .Should()
                 .BeSameAs(expectedEntity);
         }
@@ -46,11 +46,11 @@ namespace DIContainer.Tests
         {
             var container = new ContainerBuilder();
             container
-                .AddTransient<IFirstService, FirstService>()
+                .AddTransient<IPersonService, PersonService>()
                 .AddTransient<IRandomGuidService, RandomGuidService>()
-                .AddTransient<ISecondService, SecondService>()
+                .AddTransient<ICarService, CarService>()
                 .Build()
-                .GetInstance<ISecondService>()
+                .GetInstance<ICarService>()
                 .Should()
                 .NotBeNull();
         }
@@ -62,13 +62,13 @@ namespace DIContainer.Tests
 
             var generatedContainer = containerBuilder
                 .AddTransient<IRandomGuidService, RandomGuidService>()
-                .AddTransient<IFirstService, FirstService>()
-                .AddTransient<ISecondService, SecondService>()
+                .AddTransient<IPersonService, PersonService>()
+                .AddTransient<ICarService, CarService>()
                 .Build();
-            var expectedEntity = generatedContainer.GetInstance<ISecondService>();
+            var expectedEntity = generatedContainer.GetInstance<ICarService>();
             
             generatedContainer
-                .GetInstance<ISecondService>()
+                .GetInstance<ICarService>()
                 .Should()
                 .NotBeSameAs(expectedEntity);
         }
@@ -80,20 +80,20 @@ namespace DIContainer.Tests
 
             var generatedContainer = containerBuilder
                 .AddTransient<IRandomGuidService, RandomGuidService>()
-                .AddTransient<IFirstService, FirstService>()
-                .AddTransient<ISecondService, SecondService>()
+                .AddTransient<IPersonService, PersonService>()
+                .AddTransient<ICarService, CarService>()
                 .Build();
             
             generatedContainer
-                .GetInstance<ISecondService>()
+                .GetInstance<ICarService>()
                 .Should()
                 .NotBeNull();
 
             var a = generatedContainer
-                .GetInstance<ISecondService>();
+                .GetInstance<ICarService>();
 
             var b = generatedContainer
-                .GetInstance<ISecondService>();
+                .GetInstance<ICarService>();
             
             Assert.NotEqual(a.RandomGuid, b.RandomGuid);
         }

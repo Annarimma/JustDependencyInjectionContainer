@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIContainer.Tests", "DICont
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIContainer.Core", "DIContainer.Core\DIContainer.Core.csproj", "{76182937-D050-43E2-8288-0332D49457CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIContainer.Sample", "DIContainer.Sample\DIContainer.Sample.csproj", "{26D2FA24-BBAF-45B4-B5AB-23878BD90843}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{76182937-D050-43E2-8288-0332D49457CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76182937-D050-43E2-8288-0332D49457CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76182937-D050-43E2-8288-0332D49457CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26D2FA24-BBAF-45B4-B5AB-23878BD90843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26D2FA24-BBAF-45B4-B5AB-23878BD90843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26D2FA24-BBAF-45B4-B5AB-23878BD90843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26D2FA24-BBAF-45B4-B5AB-23878BD90843}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
