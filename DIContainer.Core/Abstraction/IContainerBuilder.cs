@@ -1,23 +1,15 @@
-﻿using DIContainer.Core.Implementation;
+﻿using DIContainer.Core.MetaInfo;
 
 namespace DIContainer.Core.Abstraction
 {
     /// <summary>
-    /// Keep all dependency
+    /// Builder keep all dependency
     /// </summary>
     public interface IContainerBuilder
     {
-        Container Build();
-        
-        IContainerBuilder AddSingleton<TInterface>()
-            where TInterface : class;
-        
-        IContainerBuilder AddSingleton<TInterface, TImplementation>()
-            where TInterface : class
-            where TImplementation : class, TInterface;
+        IContainer Build();
 
-        IContainerBuilder AddTransient<TInterface, TImplementation>()
-            where TInterface : class
-            where TImplementation : class, TInterface;
+        // todo or just Add ?
+        void Register(ServiceMetaInfo descriptor);
     }
 }

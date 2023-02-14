@@ -1,8 +1,9 @@
 ﻿namespace DIContainer.Core.Enums
 {
-    public enum LifeCycle
+    public enum LifeTime
     {
         Singleton,
-        Transient
+        Transient,
+        Scoped,
     }
 }

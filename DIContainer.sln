@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIContainer.Tests", "DIContainer.Tests\DIContainer.Tests.csproj", "{7D354954-857E-4046-9B18-0F955CB852E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIContainer.Core.Tests", "DIContainer.Core.Tests\DIContainer.Core.Tests.csproj", "{7D354954-857E-4046-9B18-0F955CB852E0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIContainer.Core", "DIContainer.Core\DIContainer.Core.csproj", "{76182937-D050-43E2-8288-0332D49457CE}"
 EndProject

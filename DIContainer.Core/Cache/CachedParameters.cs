@@ -9,7 +9,7 @@ namespace DIContainer.Core.Cache
         private static readonly Dictionary<ConstructorInfo, List<ParameterInfo>> _cachedParameters 
             = new Dictionary<ConstructorInfo, List<ParameterInfo>>();
         
-        public static List<ParameterInfo> GetParameters(ConstructorInfo constructorInfo)
+        public static IEnumerable<ParameterInfo> GetParameters(ConstructorInfo constructorInfo)
         {
             if (_cachedParameters
                 .TryGetValue(constructorInfo, out var parameterInfo))

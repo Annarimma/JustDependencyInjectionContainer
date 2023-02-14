@@ -7,6 +7,7 @@ namespace DIContainer.Core.Cache
 {
     public static class CachedConstructors
     {
+        // todo cuncurrent dictionary
         private static Dictionary<Type, ConstructorInfo> _cachedConstructors 
             = new Dictionary<Type, ConstructorInfo>();
         
@@ -18,8 +19,8 @@ namespace DIContainer.Core.Cache
             }
             
             _cachedConstructors[implementationType] = implementationType
-                .GetConstructors()
-                .First();
+                .GetConstructors(BindingFlags.Public | BindingFlags.Instance)
+                .Single();
             
             constructor = _cachedConstructors[implementationType];
 
