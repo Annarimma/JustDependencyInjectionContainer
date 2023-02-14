@@ -1,17 +1,17 @@
 ﻿using System;
-using DIContainer.Tests.Models.Abstraction;
+using DIContainer.Tests.Abstractions;
 
 namespace DIContainer.Tests.Models
 {
-    public class SecondService : ISecondService
+    public class CarService : ICarService
     {
-        private readonly IFirstService _firstService;
+        private readonly IPersonService _personService;
         private readonly IRandomGuidService _randomGuidService;
         public Guid RandomGuid { get; set; } = Guid.NewGuid();
 
-        public SecondService(IFirstService firstService, IRandomGuidService randomGuidService)
+        public CarService(IPersonService personService, IRandomGuidService randomGuidService)
         {
-            _firstService = firstService;
+            _personService = personService;
             _randomGuidService = randomGuidService;
             RandomGuid = _randomGuidService.RandomGuid;
         }

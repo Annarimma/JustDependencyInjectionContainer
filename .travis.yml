@@ -1,3 +1,0 @@
-language: csharp
-solution: DIContainer.sln
-dotnet: netcoreapp3.1

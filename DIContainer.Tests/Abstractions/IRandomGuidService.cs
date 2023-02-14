@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DIContainer.Tests.Models.Abstraction
+namespace DIContainer.Tests.Abstractions
 {
     public interface IRandomGuidService
     {

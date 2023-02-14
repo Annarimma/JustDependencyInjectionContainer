@@ -1,5 +1,5 @@
 ﻿using System;
-using DIContainer.Tests.Models.Abstraction;
+using DIContainer.Tests.Abstractions;
 
 namespace DIContainer.Tests.Models
 {
