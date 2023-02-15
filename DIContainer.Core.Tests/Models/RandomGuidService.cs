@@ -7,19 +7,19 @@ namespace DIContainer.Tests.Models
     {
         public Guid RandomGuid { get; } = Guid.NewGuid();
 
-        public RandomGuidService()
-        {
-            
-        }
-
-        public RandomGuidService(string guid)
-        {
-            
-        }
-        
-        public RandomGuidService(string guidString, Guid guid)
-        {
-            
-        }
+        // public RandomGuidService()
+        // {
+        //     
+        // }
+        //
+        // public RandomGuidService(string guid)
+        // {
+        //     
+        // }
+        //
+        // public RandomGuidService(string guidString, Guid guid)
+        // {
+        //     
+        // }
     }
 }

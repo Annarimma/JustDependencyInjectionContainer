@@ -4,12 +4,11 @@ using DIContainer.Core.Enums;
 namespace DIContainer.Core.MetaInfo
 {
     /// <summary>
-    /// Service description
+    /// Base Service descriptor
     /// </summary>
-    public class ServiceMetaInfo
+    public abstract class ServiceMetaInfo
     {
-        public Type ImplementationType { get; set; }
-        public LifeCycle LifeCycle { get; set; }
-        public object Instance { get; set; }
+        public Type InterfaceType { get; init; }
+        public LifeTime LifeTime { get; init; }
     }
 }
