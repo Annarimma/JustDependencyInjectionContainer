@@ -96,10 +96,10 @@ public static class TypeBased
     /// <summary>
     /// General method for Type Based Service Descriptors
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="interface"></param>
-    /// <param name="implementation"></param>
-    /// <param name="lifeTime"></param>
+    /// <param name="builder">Container builder</param>
+    /// <param name="interface">Type of Interface</param>
+    /// <param name="implementation">Type of Implementation</param>
+    /// <param name="lifeTime">Life Time</param>
     /// <returns>IContainerBuilder</returns>
     private static IContainerBuilder AddType(
         this IContainerBuilder builder,
