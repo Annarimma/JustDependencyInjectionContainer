@@ -1,22 +1,26 @@
+using System;
 using DIContainer.Core.Abstraction;
 using DIContainer.Core.Enums;
 using DIContainer.Core.MetaInfo;
 
 namespace DIContainer.Core.Extensions;
 
-public static class Type
+/// <summary>
+/// Type Based Service Descriptor Extensions
+/// </summary>
+public static class TypeBased
 {
     /// <summary>
-    /// todo comment
+    /// Singleton registration
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="serviceInterface"></param>
-    /// <param name="serviceImplementation"></param>
-    /// <returns></returns>
+    /// <param name="builder">Container builder</param>
+    /// <param name="interface">Type of Interface</param>
+    /// <param name="implementation">Type of Implementation</param>
+    /// <returns>IContainerBuilder</returns>
     public static IContainerBuilder AddSingleton(this IContainerBuilder builder,
-        System.Type @serviceInterface, System.Type serviceImplementation)
+        Type @interface, Type implementation)
     {
-        return builder.AddType(serviceInterface, serviceImplementation, LifeTime.Singleton);
+        return builder.RegisterType(@interface, implementation, LifeTime.Singleton);
     }
 
     /// <summary>
@@ -30,21 +34,21 @@ public static class Type
         where TInterface : class 
         where TImplementation : class, TInterface
     {
-        return builder.AddType(typeof(TInterface), typeof(TImplementation), LifeTime.Singleton);
+        return builder.RegisterType(typeof(TInterface), typeof(TImplementation), LifeTime.Singleton);
     }
     
     /// <summary>
-    /// todo comment
+    /// Transient registration
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="serviceInterface"></param>
-    /// <param name="implementation"></param>
-    /// <returns></returns>
+    /// <param name="builder">Container builder</param>
+    /// <param name="interface">Type of Interface</param>
+    /// <param name="implementation">Type of Implementation</param>
+    /// <returns>IContainerBuilder</returns>
     public static IContainerBuilder AddTransient(this IContainerBuilder builder,
-        System.Type serviceInterface,
-        System.Type implementation)
+        Type @interface,
+        Type implementation)
     {
-        return builder.AddType(serviceInterface, implementation, LifeTime.Transient);
+        return builder.RegisterType(@interface, implementation, LifeTime.Transient);
     }
     
     /// <summary>
@@ -58,21 +62,21 @@ public static class Type
         where TInterface : class 
         where TImplementation : class, TInterface
     {
-        return builder.AddType(typeof(TInterface), typeof(TImplementation), LifeTime.Transient);
+        return builder.RegisterType(typeof(TInterface), typeof(TImplementation), LifeTime.Transient);
     }
 
     /// <summary>
-    /// todo comment
+    /// Scoped registration
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="service"></param>
-    /// <param name="implementation"></param>
-    /// <returns></returns>
-    public static IContainerBuilder RegisterScoped(this IContainerBuilder builder,
-        System.Type service,
-        System.Type implementation)
+    /// <param name="builder">Container builder</param>
+    /// <param name="interface">Type of Interface</param>
+    /// <param name="implementation">Type of Implementation</param>
+    /// <returns>IContainerBuilder</returns>
+    public static IContainerBuilder AddScoped(this IContainerBuilder builder,
+        Type @interface,
+        Type implementation)
     {
-        return builder.AddType(service, implementation, LifeTime.Scoped);
+        return builder.RegisterType(@interface, implementation, LifeTime.Scoped);
     }
 
     /// <summary>
@@ -86,27 +90,27 @@ public static class Type
         where TInterface : class
         where TImplementation : class, TInterface
     {
-        return builder.AddType(typeof(TInterface), typeof(TImplementation), LifeTime.Scoped);
+        return builder.RegisterType(typeof(TInterface), typeof(TImplementation), LifeTime.Scoped);
     }
     
     /// <summary>
-    /// todo comment
+    /// General method for Type Based Service Descriptors
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="service"></param>
-    /// <param name="implementation"></param>
-    /// <param name="lifeTime"></param>
-    /// <returns></returns>
-    private static IContainerBuilder AddType(
+    /// <param name="builder">Container builder</param>
+    /// <param name="interface">Type of Interface</param>
+    /// <param name="implementation">Type of Implementation</param>
+    /// <param name="lifeTime">Life Time</param>
+    /// <returns>IContainerBuilder</returns>
+    private static IContainerBuilder RegisterType(
         this IContainerBuilder builder,
-        System.Type service,
-        System.Type implementation,
+        Type @interface,
+        Type implementation,
         LifeTime lifeTime)
     {
         builder.Register(new TypeBasedServiceDescriptor()
         {
             ImplementationType = implementation,
-            InterfaceType = service,
+            InterfaceType = @interface,
             LifeTime = lifeTime
         });
 
