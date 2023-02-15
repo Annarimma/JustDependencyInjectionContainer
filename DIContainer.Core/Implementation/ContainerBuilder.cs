@@ -7,13 +7,15 @@ using DIContainer.Core.MetaInfo;
 namespace DIContainer.Core.Implementation
 {
     /// <summary>
-    /// Keep all dependency
+    /// Builder keep all dependency
     /// </summary>
     public class ContainerBuilder : IContainerBuilder
     {
         private Dictionary<Type, ServiceMetaInfo> _serviceDescriptors 
             = new Dictionary<Type, ServiceMetaInfo>();
         
+
+        // like ConfigureServices
         public Container Build()
         {
             return new Container(_serviceDescriptors);

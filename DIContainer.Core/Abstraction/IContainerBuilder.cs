@@ -3,7 +3,7 @@
 namespace DIContainer.Core.Abstraction
 {
     /// <summary>
-    /// Keep all dependency
+    /// Builder keep all dependency
     /// </summary>
     public interface IContainerBuilder
     {

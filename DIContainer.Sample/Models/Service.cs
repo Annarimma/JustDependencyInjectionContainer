@@ -10,9 +10,4 @@ public class Service : IService
     {
         _repository = repository;
     }
-
-    public Service()
-    {
-        
-    }
 }

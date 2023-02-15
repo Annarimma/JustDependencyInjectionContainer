@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Models\Abstraction" />
+      <ProjectReference Include="..\DIContainer.Core\DIContainer.Core.csproj" />
     </ItemGroup>
 
 </Project>
