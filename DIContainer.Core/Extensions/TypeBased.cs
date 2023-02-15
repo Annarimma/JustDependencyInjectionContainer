@@ -1,22 +1,26 @@
+using System;
 using DIContainer.Core.Abstraction;
 using DIContainer.Core.Enums;
 using DIContainer.Core.MetaInfo;
 
 namespace DIContainer.Core.Extensions;
 
-public static class Type
+/// <summary>
+/// Type Based Service Descriptor Extensions
+/// </summary>
+public static class TypeBased
 {
     /// <summary>
-    /// todo comment
+    /// Singleton registration
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="serviceInterface"></param>
-    /// <param name="serviceImplementation"></param>
-    /// <returns></returns>
+    /// <param name="builder">Container builder</param>
+    /// <param name="interface">Type of Interface</param>
+    /// <param name="implementation">Type of Implementation</param>
+    /// <returns>IContainerBuilder</returns>
     public static IContainerBuilder AddSingleton(this IContainerBuilder builder,
-        System.Type @serviceInterface, System.Type serviceImplementation)
+        Type @interface, Type implementation)
     {
-        return builder.AddType(serviceInterface, serviceImplementation, LifeTime.Singleton);
+        return builder.AddType(@interface, implementation, LifeTime.Singleton);
     }
 
     /// <summary>
@@ -34,17 +38,17 @@ public static class Type
     }
     
     /// <summary>
-    /// todo comment
+    /// Transient registration
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="serviceInterface"></param>
-    /// <param name="implementation"></param>
-    /// <returns></returns>
+    /// <param name="builder">Container builder</param>
+    /// <param name="interface">Type of Interface</param>
+    /// <param name="implementation">Type of Implementation</param>
+    /// <returns>IContainerBuilder</returns>
     public static IContainerBuilder AddTransient(this IContainerBuilder builder,
-        System.Type serviceInterface,
-        System.Type implementation)
+        Type @interface,
+        Type implementation)
     {
-        return builder.AddType(serviceInterface, implementation, LifeTime.Transient);
+        return builder.AddType(@interface, implementation, LifeTime.Transient);
     }
     
     /// <summary>
@@ -62,17 +66,17 @@ public static class Type
     }
 
     /// <summary>
-    /// todo comment
+    /// Scoped registration
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="service"></param>
-    /// <param name="implementation"></param>
-    /// <returns></returns>
-    public static IContainerBuilder RegisterScoped(this IContainerBuilder builder,
-        System.Type service,
-        System.Type implementation)
+    /// <param name="builder">Container builder</param>
+    /// <param name="interface">Type of Interface</param>
+    /// <param name="implementation">Type of Implementation</param>
+    /// <returns>IContainerBuilder</returns>
+    public static IContainerBuilder AddScoped(this IContainerBuilder builder,
+        Type @interface,
+        Type implementation)
     {
-        return builder.AddType(service, implementation, LifeTime.Scoped);
+        return builder.AddType(@interface, implementation, LifeTime.Scoped);
     }
 
     /// <summary>
@@ -90,23 +94,23 @@ public static class Type
     }
     
     /// <summary>
-    /// todo comment
+    /// General method for Type Based Service Descriptors
     /// </summary>
     /// <param name="builder"></param>
-    /// <param name="service"></param>
+    /// <param name="interface"></param>
     /// <param name="implementation"></param>
     /// <param name="lifeTime"></param>
-    /// <returns></returns>
+    /// <returns>IContainerBuilder</returns>
     private static IContainerBuilder AddType(
         this IContainerBuilder builder,
-        System.Type service,
-        System.Type implementation,
+        Type @interface,
+        Type implementation,
         LifeTime lifeTime)
     {
         builder.Register(new TypeBasedServiceDescriptor()
         {
             ImplementationType = implementation,
-            InterfaceType = service,
+            InterfaceType = @interface,
             LifeTime = lifeTime
         });
 
