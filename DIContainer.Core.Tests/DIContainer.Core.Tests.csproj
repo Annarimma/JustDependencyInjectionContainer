@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <IsPackable>false</IsPackable>
+        <RootNamespace>DIContainer.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,10 +22,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DIContainer.Core\DIContainer.Core.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Models\Abstraction" />
     </ItemGroup>
 
 </Project>
