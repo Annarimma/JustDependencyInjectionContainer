@@ -21,7 +21,7 @@ public static class FactoryBased
         Type @interface, 
         Func<IScope, object> factory)
     {
-        return builder.AddFactory(@interface, factory, LifeTime.Singleton);
+        return builder.RegisterFactory(@interface, factory, LifeTime.Singleton);
     }
     
     /// <summary>
@@ -35,7 +35,7 @@ public static class FactoryBased
         Type @interface, 
         Func<IScope, object> factory)
     {
-        return builder.AddFactory(@interface, factory, LifeTime.Transient);
+        return builder.RegisterFactory(@interface, factory, LifeTime.Transient);
     }
     
     /// <summary>
@@ -49,7 +49,7 @@ public static class FactoryBased
         Type @interface, 
         Func<IScope, object> factory)
     {
-        return builder.AddFactory(@interface, factory, LifeTime.Scoped);
+        return builder.RegisterFactory(@interface, factory, LifeTime.Scoped);
     }
     
     /// <summary>
@@ -60,7 +60,7 @@ public static class FactoryBased
     /// <param name="factory">Factory</param>
     /// <param name="lifeTime">Life Time</param>
     /// <returns>IContainerBuilder</returns>
-    private static IContainerBuilder AddFactory(
+    private static IContainerBuilder RegisterFactory(
         this IContainerBuilder builder,
         Type @interface,
         Func<IScope, object> factory,

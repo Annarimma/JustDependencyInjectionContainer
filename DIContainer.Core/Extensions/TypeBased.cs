@@ -20,7 +20,7 @@ public static class TypeBased
     public static IContainerBuilder AddSingleton(this IContainerBuilder builder,
         Type @interface, Type implementation)
     {
-        return builder.AddType(@interface, implementation, LifeTime.Singleton);
+        return builder.RegisterType(@interface, implementation, LifeTime.Singleton);
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public static class TypeBased
         where TInterface : class 
         where TImplementation : class, TInterface
     {
-        return builder.AddType(typeof(TInterface), typeof(TImplementation), LifeTime.Singleton);
+        return builder.RegisterType(typeof(TInterface), typeof(TImplementation), LifeTime.Singleton);
     }
     
     /// <summary>
@@ -48,7 +48,7 @@ public static class TypeBased
         Type @interface,
         Type implementation)
     {
-        return builder.AddType(@interface, implementation, LifeTime.Transient);
+        return builder.RegisterType(@interface, implementation, LifeTime.Transient);
     }
     
     /// <summary>
@@ -62,7 +62,7 @@ public static class TypeBased
         where TInterface : class 
         where TImplementation : class, TInterface
     {
-        return builder.AddType(typeof(TInterface), typeof(TImplementation), LifeTime.Transient);
+        return builder.RegisterType(typeof(TInterface), typeof(TImplementation), LifeTime.Transient);
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public static class TypeBased
         Type @interface,
         Type implementation)
     {
-        return builder.AddType(@interface, implementation, LifeTime.Scoped);
+        return builder.RegisterType(@interface, implementation, LifeTime.Scoped);
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public static class TypeBased
         where TInterface : class
         where TImplementation : class, TInterface
     {
-        return builder.AddType(typeof(TInterface), typeof(TImplementation), LifeTime.Scoped);
+        return builder.RegisterType(typeof(TInterface), typeof(TImplementation), LifeTime.Scoped);
     }
     
     /// <summary>
@@ -101,7 +101,7 @@ public static class TypeBased
     /// <param name="implementation">Type of Implementation</param>
     /// <param name="lifeTime">Life Time</param>
     /// <returns>IContainerBuilder</returns>
-    private static IContainerBuilder AddType(
+    private static IContainerBuilder RegisterType(
         this IContainerBuilder builder,
         Type @interface,
         Type implementation,
