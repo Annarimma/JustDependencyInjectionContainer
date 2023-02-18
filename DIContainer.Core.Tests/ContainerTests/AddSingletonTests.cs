@@ -1,19 +1,18 @@
-using DIContainer.Core.Abstraction;
 using DIContainer.Core.Extensions;
-using DIContainer.Core.Implementation;
 using DIContainer.Tests.Abstractions;
 using DIContainer.Tests.Models;
 using FluentAssertions;
-using Xunit;
+using NUnit.Framework;
 
 namespace DIContainer.Tests.ContainerTests;
 
-public class AddSingletonTests : TestsFixture
+[TestFixture]
+public class AddSingletonTests : TestBase
 {
-    [Fact]
+    [Test]
     public void AddSingleton_TInterface_TImplementation_NotNull()
     {
-        builder
+        Builder
             .AddSingleton<IPersonService, PersonService>()
             .AddSingleton<IRandomGuidService, RandomGuidService>()
             .AddSingleton<ICarService, CarService>()
@@ -24,12 +23,10 @@ public class AddSingletonTests : TestsFixture
             .NotBeNull();
     }
     
-    // [Fact]
+    //[Test]
     public void AddSingleton_TInterface_TImplementation_Should_Return_Two_Same_Instances()
     {
-        IContainerBuilder containerBuilder = new ContainerBuilder();
-    
-        var actualContainer = containerBuilder
+        var actualContainer = Builder
             .AddSingleton<IRandomGuidService, RandomGuidService>()
             .AddSingleton<IPersonService, PersonService>()
             .AddSingleton<ICarService, CarService>()

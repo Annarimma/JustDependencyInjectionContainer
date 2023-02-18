@@ -1,21 +1,18 @@
-using DIContainer.Core.Abstraction;
 using DIContainer.Core.Extensions;
-using DIContainer.Core.Implementation;
 using DIContainer.Tests.Abstractions;
 using DIContainer.Tests.Models;
 using FluentAssertions;
-using Xunit;
+using NUnit.Framework;
 
 namespace DIContainer.Tests.ContainerTests;
 
-public class AddTransientTests
+[TestFixture]
+public class AddTransientTests : TestBase
 {
-    [Fact]
+    [Test]
     public void AddTransient_TInterface_TImplementation_NotNull()
     {
-        ContainerBuilder builder = new ContainerBuilder();
-        
-        builder
+        Builder
             .AddTransient<IPersonService, PersonService>()
             .AddTransient<IRandomGuidService, RandomGuidService>()
             .AddTransient<ICarService, CarService>()
@@ -26,14 +23,11 @@ public class AddTransientTests
             .NotBeNull();
     }
     
-    [Fact]
+    [Test]
     public void AddTransient_TInterface_TImplementation_Should_Return_Two_Different_Instances()
     {
-        // arrange
-        ContainerBuilder builder = new ContainerBuilder();
-        
         // act
-        var actualContainer = builder
+        var actualContainer = Builder
             .AddTransient<IRandomGuidService, RandomGuidService>()
             .AddTransient<IPersonService, PersonService>()
             .AddTransient<ICarService, CarService>()
@@ -54,12 +48,11 @@ public class AddTransientTests
     }
     
     // todo do we need this test?
-    [Fact]
+    [Test]
     public void AddTransient_TInterface_TImplementation_Should_Return_Different_Instances()
     {
         // act
-        ContainerBuilder builder = new ContainerBuilder();
-        var actualContainer = builder
+        var actualContainer = Builder
             .AddTransient<IRandomGuidService, RandomGuidService>()
             .AddTransient<IPersonService, PersonService>()
             .AddTransient<ICarService, CarService>()
