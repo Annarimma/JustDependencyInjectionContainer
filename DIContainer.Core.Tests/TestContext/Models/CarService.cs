@@ -1,7 +1,7 @@
 ﻿using System;
-using DIContainer.Tests.Abstractions;
+using DIContainer.Tests.TestContext.Abstractions;
 
-namespace DIContainer.Tests.Models
+namespace DIContainer.Tests.TestContext.Models
 {
     public class CarService : ICarService
     {

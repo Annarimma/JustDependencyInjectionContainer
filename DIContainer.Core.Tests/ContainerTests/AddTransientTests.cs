@@ -1,21 +1,18 @@
-using DIContainer.Core.Abstraction;
 using DIContainer.Core.Extensions;
-using DIContainer.Core.Implementation;
-using DIContainer.Tests.Abstractions;
-using DIContainer.Tests.Models;
+using DIContainer.Tests.TestContext.Abstractions;
+using DIContainer.Tests.TestContext.Models;
 using FluentAssertions;
-using Xunit;
+using NUnit.Framework;
 
 namespace DIContainer.Tests.ContainerTests;
 
-public class AddTransientTests
+[TestFixture]
+public class AddTransientTests : TestBase
 {
-    [Fact]
-    public void AddTransient_TInterface_TImplementation_NotNull()
+    [Test]
+    public void AddTransientInstances_NotNull()
     {
-        ContainerBuilder builder = new ContainerBuilder();
-        
-        builder
+        Builder
             .AddTransient<IPersonService, PersonService>()
             .AddTransient<IRandomGuidService, RandomGuidService>()
             .AddTransient<ICarService, CarService>()
@@ -26,63 +23,48 @@ public class AddTransientTests
             .NotBeNull();
     }
     
-    [Fact]
-    public void AddTransient_TInterface_TImplementation_Should_Return_Two_Different_Instances()
+    [Test]
+    public void TransientInstancesInOneScope_ShouldBe_NotSame()
     {
-        // arrange
-        ContainerBuilder builder = new ContainerBuilder();
-        
-        // act
-        var actualContainer = builder
+        var actualContainer = Builder
             .AddTransient<IRandomGuidService, RandomGuidService>()
             .AddTransient<IPersonService, PersonService>()
             .AddTransient<ICarService, CarService>()
             .Build();
+
+        var scope = actualContainer.CreateScope();
         
-        var firstExpectedInstance = actualContainer
-            .CreateScope()
+        var firstExpectedInstance = scope
             .Resolve<ICarService>();
             
-        var secondExpectedInstance = actualContainer
-            .CreateScope()
+        var secondExpectedInstance = scope
             .Resolve<ICarService>();
-            
-        // assert
-        secondExpectedInstance
+   
+        firstExpectedInstance
             .Should()
-            .NotBeSameAs(firstExpectedInstance);
+            .NotBeSameAs(secondExpectedInstance);
     }
     
-    // todo do we need this test?
-    [Fact]
-    public void AddTransient_TInterface_TImplementation_Should_Return_Different_Instances()
+    [Test]
+    public void TransientInstancesInScopes_ShouldBe_NotSame()
     {
-        // act
-        ContainerBuilder builder = new ContainerBuilder();
-        var actualContainer = builder
+        var actualContainer = Builder
             .AddTransient<IRandomGuidService, RandomGuidService>()
             .AddTransient<IPersonService, PersonService>()
             .AddTransient<ICarService, CarService>()
             .Build();
+
+        var scope1 = actualContainer.CreateScope();
+        var scope2 = actualContainer.CreateScope();
+        
+        var firstExpectedInstance = scope1
+            .Resolve<ICarService>();
             
-        actualContainer
-            .CreateScope()
-            .Resolve<ICarService>()
+        var secondExpectedInstance = scope2
+            .Resolve<ICarService>();
+   
+        firstExpectedInstance
             .Should()
-            .NotBeNull();
-        
-        var firstGuid = actualContainer
-            .CreateScope()
-            .Resolve<ICarService>()
-            .RandomGuid;
-        
-        var secondGuid = actualContainer
-            .CreateScope()
-            .Resolve<ICarService>()
-            .RandomGuid;
-            
-        // assert
-        var equals = firstGuid.Equals(secondGuid);
-        equals.Should().Be(false);
+            .NotBeSameAs(secondExpectedInstance);
     }
 }

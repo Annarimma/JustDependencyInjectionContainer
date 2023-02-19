@@ -1,19 +1,18 @@
-using DIContainer.Core.Abstraction;
 using DIContainer.Core.Extensions;
-using DIContainer.Core.Implementation;
-using DIContainer.Tests.Abstractions;
-using DIContainer.Tests.Models;
+using DIContainer.Tests.TestContext.Abstractions;
+using DIContainer.Tests.TestContext.Models;
 using FluentAssertions;
-using Xunit;
+using NUnit.Framework;
 
 namespace DIContainer.Tests.ContainerTests;
 
-public class AddSingletonTests : TestsFixture
+[TestFixture]
+public class AddSingletonTests : TestBase
 {
-    [Fact]
-    public void AddSingleton_TInterface_TImplementation_NotNull()
+    [Test]
+    public void AddSingletonInstance_NotNull()
     {
-        builder
+        Builder
             .AddSingleton<IPersonService, PersonService>()
             .AddSingleton<IRandomGuidService, RandomGuidService>()
             .AddSingleton<ICarService, CarService>()
@@ -24,27 +23,48 @@ public class AddSingletonTests : TestsFixture
             .NotBeNull();
     }
     
-    // [Fact]
-    public void AddSingleton_TInterface_TImplementation_Should_Return_Two_Same_Instances()
+    [Test]
+    public void SingletonInstancesFromOneScope_ShouldBe_Same()
     {
-        IContainerBuilder containerBuilder = new ContainerBuilder();
-    
-        var actualContainer = containerBuilder
+        var actualContainer = Builder
             .AddSingleton<IRandomGuidService, RandomGuidService>()
             .AddSingleton<IPersonService, PersonService>()
             .AddSingleton<ICarService, CarService>()
             .Build();
+
+        var scope = actualContainer.CreateScope();
         
-        var firstExpectedInstance = actualContainer
-            .CreateScope()
+        var firstExpectedInstance = scope
             .Resolve<ICarService>();
         
-        var secondExpectedInstance = actualContainer
-            .CreateScope()
+        var secondExpectedInstance = scope
             .Resolve<ICarService>();
             
-        secondExpectedInstance
+        firstExpectedInstance
             .Should()
-            .BeSameAs(firstExpectedInstance);
+            .BeSameAs(secondExpectedInstance);
+    }
+    
+    [Test]
+    public void SingletonInstancesFromScopes_ShouldBe_Same()
+    {
+        var actualContainer = Builder
+            .AddSingleton<IRandomGuidService, RandomGuidService>()
+            .AddSingleton<IPersonService, PersonService>()
+            .AddSingleton<ICarService, CarService>()
+            .Build();
+
+        var scope1 = actualContainer.CreateScope();
+        var scope2 = actualContainer.CreateScope();
+        
+        var firstExpectedInstance = scope1
+            .Resolve<ICarService>();
+        
+        var secondExpectedInstance = scope2
+            .Resolve<ICarService>();
+            
+        firstExpectedInstance
+            .Should()
+            .BeSameAs(secondExpectedInstance);
     }
 }

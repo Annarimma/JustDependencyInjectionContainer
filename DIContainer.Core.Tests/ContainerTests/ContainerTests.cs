@@ -1,21 +1,18 @@
-using DIContainer.Core.Abstraction;
 using DIContainer.Core.Extensions;
-using DIContainer.Core.Implementation;
-using DIContainer.Tests.Abstractions;
-using DIContainer.Tests.Models;
+using DIContainer.Tests.TestContext.Abstractions;
+using DIContainer.Tests.TestContext.Models;
 using FluentAssertions;
-using Xunit;
+using NUnit.Framework;
 
 namespace DIContainer.Tests.ContainerTests
 {
-    public class ContainerTests
+    [TestFixture]
+    public class ContainerTests : TestBase
     {
-        [Fact]
+        [Test]
         public void Container_Should_GetInstance()
         {
-            IContainerBuilder builder = new ContainerBuilder();
-            
-            builder
+            Builder
                 .AddSingleton<IPersonService, PersonService>()
                 .AddSingleton<IRandomGuidService, RandomGuidService>()
                 .AddSingleton<ICarService, CarService>()
@@ -24,18 +21,6 @@ namespace DIContainer.Tests.ContainerTests
                 .Resolve<ICarService>()
                 .Should()
                 .BeOfType<CarService>();
-        }
-        
-        //[Fact]
-        public void Container_Should_GetInstance_WithParams()
-        {
-            
-        }
-        
-        //[Fact]
-        public void Container_Should_GetInstance_WithNoParams()
-        {
-            
         }
     }
 }

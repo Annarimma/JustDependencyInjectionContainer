@@ -5,8 +5,4 @@
         <RootNamespace>DIContainer.Core</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Extentions" />
-    </ItemGroup>
-
 </Project>
