@@ -10,11 +10,17 @@ namespace DIContainer.Core.Builders
     public class ContainerBuilder : IContainerBuilder
     {
         private readonly List<ServiceMetaInfo> _serviceDescriptors = new ();
+        private readonly IActivationBuilder _builder;
+
+        public ContainerBuilder(IActivationBuilder builder)
+        {
+            _builder = builder;
+        }
 
         // like ConfigureServices
         public IContainer Build()
         {
-            return new Container.Container(_serviceDescriptors, new ReflectionActivationBuilder());
+            return new Container.Container(_serviceDescriptors, _builder);
         }
 
         public void Register(ServiceMetaInfo descriptor)

@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using DIContainer.Core.Abstraction;
 using DIContainer.Core.MetaInfo;
 
@@ -6,9 +7,11 @@ namespace DIContainer.Core.Builders;
 
 public class ReflectionActivationBuilder : BaseActivationBuilder, IActivationBuilder
 {
-    public Func<IScope, object> BuildActivation(ServiceMetaInfo descriptor)
+    protected override Func<IScope, object> BuildActivationInternal(TypeBasedServiceDescriptor typeDescriptor, 
+        ConstructorInfo ctor, 
+        ParameterInfo[] args)
     {
-        var implementationType = GetImplementationType(descriptor);
+        var implementationType = GetImplementationType(typeDescriptor);
         return scope => GetImplementation(scope, implementationType);
     }
 }

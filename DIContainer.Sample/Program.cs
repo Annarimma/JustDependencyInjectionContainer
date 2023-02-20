@@ -4,7 +4,7 @@ using DIContainer.Core.Extensions;
 using DIContainer.Sample.Abstractions;
 using DIContainer.Sample.Models;
 
-IContainerBuilder builder = new ContainerBuilder();
+IContainerBuilder builder = new ContainerBuilder(new ReflectionActivationBuilder());
 var container = builder
     .AddSingleton<IRepository, Repository>()
     .AddScoped<IService, Service>()

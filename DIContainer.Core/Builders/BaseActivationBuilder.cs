@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using DIContainer.Core.Abstraction;
 using DIContainer.Core.Cache;
 using DIContainer.Core.ErrorHandler;
@@ -9,6 +10,20 @@ namespace DIContainer.Core.Builders;
 
 public abstract class BaseActivationBuilder
 {
+    public Func<IScope, object> BuildActivation(ServiceMetaInfo descriptor)
+    {
+        var typeDescriptor = (TypeBasedServiceDescriptor)descriptor;
+        var implementationType = GetImplementationType(descriptor);
+        var ctor = GetConstructorInfo(implementationType);
+        var args = ctor.GetParameters();
+
+        return BuildActivationInternal(typeDescriptor, ctor, args);
+    }
+
+    protected abstract Func<IScope, object> BuildActivationInternal(TypeBasedServiceDescriptor typeDescriptor, 
+        ConstructorInfo ctor, 
+        ParameterInfo[] args);
+    
     /// <summary>
     /// Return implementation type by descriptor
     /// </summary>
@@ -39,7 +54,7 @@ public abstract class BaseActivationBuilder
     {
         if (scope == null) throw new ArgumentNullException(nameof(scope));
         
-        var constructorInfo = CachedConstructors.GetConstructor(implementationType);
+        var constructorInfo = GetConstructorInfo(implementationType);
 
         var parameters = CachedParameters
             .GetParameters(constructorInfo)
@@ -48,5 +63,11 @@ public abstract class BaseActivationBuilder
 
         var implementation = constructorInfo.Invoke(parameters);
         return implementation;
+    }
+
+    private static ConstructorInfo GetConstructorInfo(Type implementationType)
+    {
+        var constructorInfo = CachedConstructors.GetConstructor(implementationType);
+        return constructorInfo;
     }
 }
