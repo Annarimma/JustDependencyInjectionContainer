@@ -1,27 +1,34 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace DIContainer.Core.Cache
 {
+    /// <summary>
+    /// Reflection optimization class store cached constructors.
+    /// </summary>
     public static class CachedConstructors
     {
-        // todo cuncurrent dictionary
-        private static Dictionary<Type, ConstructorInfo> _cachedConstructors 
-            = new Dictionary<Type, ConstructorInfo>();
-        
-        public static ConstructorInfo GetConstructor(Type implementationType)
+        private static readonly ConcurrentDictionary<Type, ConstructorInfo> _cachedConstructors = new();
+
+        /// <summary>
+        /// Get a stored contractor info or add a new one.
+        /// </summary>
+        /// <param name="implementationType">Implementation Type.</param>
+        /// <returns>Constructor Info.</returns>
+        public static ConstructorInfo GetOrAddConstructor(Type implementationType)
         {
             if (_cachedConstructors.TryGetValue(implementationType, out var constructor))
             {
                 return constructor;
             }
-            
+
             _cachedConstructors[implementationType] = implementationType
                 .GetConstructors(BindingFlags.Public | BindingFlags.Instance)
                 .Single();
-            
+
             constructor = _cachedConstructors[implementationType];
 
             return constructor;

@@ -5,10 +5,14 @@ using DIContainer.Core.MetaInfo;
 
 namespace DIContainer.Core.Builders;
 
+/// <summary>
+/// Reflection Activation.
+/// </summary>
 public class ReflectionActivationBuilder : BaseActivationBuilder, IActivationBuilder
 {
-    protected override Func<IScope, object> BuildActivationInternal(TypeBasedServiceDescriptor typeDescriptor, 
-        ConstructorInfo ctor, 
+    protected override Func<IScope, object> BuildActivationInternal(
+        TypeBasedServiceDescriptor typeDescriptor,
+        ConstructorInfo ctor,
         ParameterInfo[] args)
     {
         var implementationType = GetImplementationType(typeDescriptor);

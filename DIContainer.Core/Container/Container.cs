@@ -11,8 +11,13 @@ using DIContainer.Core.MetaInfo;
 
 namespace DIContainer.Core.Container
 {
+    /// <summary>
+    /// Container class for dependencies managing.
+    /// </summary>
     public class Container : IContainer
     {
+        #region private sealed class Scope : IScope
+
         private sealed class Scope : IScope
         {
             private readonly Container _container;
@@ -23,16 +28,16 @@ namespace DIContainer.Core.Container
             {
                 _container = container;
             }
-            
+
             public object Resolve(Type @interface)
             {
                 var descriptor = _container.GetDescriptor(@interface);
-                
+
                 if (descriptor.LifeTime == LifeTime.Transient)
                 {
                     return CreateDisposableInstance(@interface);
                 }
-                
+
                 if (descriptor.LifeTime == LifeTime.Scoped || this == _container._rootScope)
                 {
                     return _scopedInstances.GetOrAdd(@interface, s => _container.GetInstance(s, this));
@@ -46,22 +51,6 @@ namespace DIContainer.Core.Container
             public bool IsRegistered<TInterface>()
             {
                 return IsRegistered(typeof(TInterface));
-            }
-            
-            private bool IsRegistered(Type @interface)
-            {
-                return _scopedInstances.Any(k => k.Key == @interface);
-            }
-
-            private object CreateDisposableInstance(Type @interface)
-            {
-                var result = _container.GetInstance(@interface, this);
-                if (result is IDisposable || result is IAsyncDisposable)
-                {
-                    _disposables.Push(result);
-                }
-
-                return result;
             }
 
             public void Dispose()
@@ -94,44 +83,92 @@ namespace DIContainer.Core.Container
                     }
                 }
             }
-        };
-        
+
+            private bool IsRegistered(Type @interface)
+            {
+                return _scopedInstances.Any(k => k.Key == @interface);
+            }
+
+            private object CreateDisposableInstance(Type @interface)
+            {
+                var result = _container.GetInstance(@interface, this);
+                if (result is IDisposable || result is IAsyncDisposable)
+                {
+                    _disposables.Push(result);
+                }
+
+                return result;
+            }
+        }
+
+        #endregion
         private readonly ImmutableDictionary<Type, ServiceMetaInfo> _serviceDescriptors;
         private readonly ConcurrentDictionary<Type, Func<IScope, object>> _builtActivators = new();
         private readonly Scope _rootScope;
         private readonly IActivationBuilder _builder;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Container"/> class.
+        /// </summary>
+        /// <param name="serviceDescriptors">Service descriptions.</param>
+        /// <param name="builder">The way how to build dependencies.</param>
         public Container(IEnumerable<ServiceMetaInfo> serviceDescriptors, IActivationBuilder builder)
         {
             _builder = builder;
             _serviceDescriptors = serviceDescriptors.ToImmutableDictionary(k => k.InterfaceType);
             _rootScope = new Scope(this);
         }
-        
+
         /// <summary>
-        /// Create new scope
+        /// Create new scope.
         /// </summary>
-        /// <returns>New scope</returns>
+        /// <returns>New scope.</returns>
         public IScope CreateScope()
         {
             return new Scope(this);
         }
 
         /// <summary>
-        /// Get instance
+        /// Dispose method for container.
         /// </summary>
-        /// <param name="interface">Interface type</param>
-        /// <param name="scope">Scope</param>
-        /// <returns>Object instance</returns>
+        public void Dispose()
+        {
+            _rootScope.Dispose();
+        }
+
+        /// <summary>
+        /// DisposeAsync method for container.
+        /// </summary>
+        public ValueTask DisposeAsync()
+        {
+            return _rootScope.DisposeAsync();
+        }
+
+        /// <summary>
+        /// Determine whether or not a service has been registered.
+        /// </summary>
+        /// <typeparam name="TInterface">The service to test for the registration of.</typeparam>
+        /// <returns>True if the service is registered.</returns>
+        public bool IsRegistered<TInterface>()
+        {
+            return CreateScope().IsRegistered<TInterface>();
+        }
+
+        /// <summary>
+        /// Get instance by interface type and scope.
+        /// </summary>
+        /// <param name="interface">Interface type.</param>
+        /// <param name="scope">Scope.</param>
+        /// <returns>Object instance.</returns>
         private object GetInstance(Type @interface, IScope scope)
         {
             return _builtActivators.GetOrAdd(@interface, BuildActivation)(scope);
         }
-        
+
         /// <summary>
-        /// Return object creation delegate
+        /// Return object creation delegate.
         /// </summary>
-        /// <returns>Delegate</returns>
+        /// <returns>Delegate.</returns>
         private Func<IScope, object> BuildActivation(Type @interface)
         {
             var descriptor = GetDescriptor(@interface);
@@ -146,14 +183,14 @@ namespace DIContainer.Core.Container
 
             return _builder.BuildActivation(descriptor);
         }
-        
+
         /// <summary>
-        /// Returns service descriptor of the specified interface
+        /// Returns service descriptor of the specified interface.
         /// </summary>
-        /// <param name="interface">Type of interface</param>
-        /// <returns>Descriptor</returns>
-        /// <exception cref="ArgumentNullException">When type is null</exception>
-        /// <exception cref="InjectionException">When interface doesn't register</exception>
+        /// <param name="interface">Type of interface.</param>
+        /// <returns>Descriptor.</returns>
+        /// <exception cref="ArgumentNullException">When type is null.</exception>
+        /// <exception cref="InjectionException">When interface doesn't register.</exception>
         private ServiceMetaInfo GetDescriptor(Type @interface)
         {
             if (@interface == null)
@@ -167,21 +204,6 @@ namespace DIContainer.Core.Container
             }
 
             return descriptor;
-        }
-
-        public void Dispose()
-        {
-            _rootScope.Dispose();
-        }
-
-        public ValueTask DisposeAsync()
-        {
-            return _rootScope.DisposeAsync();
-        }
-        
-        public bool IsRegistered<TInterface>()
-        {
-            return CreateScope().IsRegistered<TInterface>();
         }
     }
 }
