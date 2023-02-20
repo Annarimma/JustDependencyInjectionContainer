@@ -22,6 +22,18 @@ public static class TypeBased
     {
         return builder.RegisterType(@interface, implementation, LifeTime.Singleton);
     }
+    
+    /// <summary>
+    /// Singleton registration
+    /// </summary>
+    /// <param name="builder">Container builder</param>
+    /// <param name="implementation">Type of Implementation</param>
+    /// <typeparam name="TInterface">Type of Interface</typeparam>
+    /// <returns>IContainerBuilder</returns>
+    public static IContainerBuilder AddSingleton<TInterface>(this IContainerBuilder builder, Type implementation)
+    {
+        return builder.RegisterType(typeof(TInterface), implementation, LifeTime.Singleton);
+    }
 
     /// <summary>
     /// Singleton registration
@@ -52,6 +64,20 @@ public static class TypeBased
     }
     
     /// <summary>
+    /// Singleton registration
+    /// </summary>
+    /// <param name="builder">Container builder</param>
+    /// <param name="implementation">Type of Implementation</param>
+    /// <typeparam name="TInterface">Type of Interface</typeparam>
+    /// <returns>IContainerBuilder</returns>
+    public static  IContainerBuilder AddTransient<TInterface>(this IContainerBuilder builder,
+        Type implementation) 
+        where TInterface : class
+    {
+        return builder.RegisterType(typeof(TInterface), implementation, LifeTime.Transient);
+    }
+    
+    /// <summary>
     /// Transient registration
     /// </summary>
     /// <param name="builder">Container builder</param>
@@ -78,6 +104,20 @@ public static class TypeBased
     {
         return builder.RegisterType(@interface, implementation, LifeTime.Scoped);
     }
+    
+    /// <summary>
+    /// Scope registration
+    /// </summary>
+    /// <param name="builder">Container builder</param>
+    /// <param name="implementation">Type of Implementation</param>
+    /// <typeparam name="TInterface">Type of Interface</typeparam>
+    /// <returns>IContainerBuilder</returns>
+    public static  IContainerBuilder AddScoped<TInterface>(this IContainerBuilder builder,
+        Type implementation) 
+        where TInterface : class
+    {
+        return builder.RegisterType(typeof(TInterface), implementation, LifeTime.Scoped);
+    }
 
     /// <summary>
     /// Scoped registration
@@ -92,7 +132,7 @@ public static class TypeBased
     {
         return builder.RegisterType(typeof(TInterface), typeof(TImplementation), LifeTime.Scoped);
     }
-    
+
     /// <summary>
     /// General method for Type Based Service Descriptors
     /// </summary>
