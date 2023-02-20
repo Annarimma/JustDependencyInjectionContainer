@@ -10,7 +10,7 @@ using DIContainer.Core.Enums;
 using DIContainer.Core.ErrorHandler;
 using DIContainer.Core.MetaInfo;
 
-namespace DIContainer.Core.Implementation
+namespace DIContainer.Core.Container
 {
     public class Container : IContainer
     {

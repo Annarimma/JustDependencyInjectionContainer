@@ -2,7 +2,7 @@
 using DIContainer.Core.Abstraction;
 using DIContainer.Core.MetaInfo;
 
-namespace DIContainer.Core.Implementation
+namespace DIContainer.Core.Builders
 {
     /// <summary>
     /// Builder keep all dependency
@@ -14,7 +14,7 @@ namespace DIContainer.Core.Implementation
         // like ConfigureServices
         public IContainer Build()
         {
-            return new Container(_serviceDescriptors);
+            return new Container.Container(_serviceDescriptors);
         }
 
         public void Register(ServiceMetaInfo descriptor)
