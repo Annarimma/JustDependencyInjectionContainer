@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace DIContainer.Tests.ContainerTests.Lambda;
 
-public class AddTransientLambdaTests : LambdaTestBase
+public class AddTransientLambdaFixture : LambdaTestBase
 {
     [Test]
     public void AddTransientInstances_NotNull()
@@ -21,7 +21,7 @@ public class AddTransientLambdaTests : LambdaTestBase
             .Should()
             .NotBeNull();
     }
-    
+
     [Test]
     public void TransientInstancesInOneScope_ShouldBe_NotSame()
     {

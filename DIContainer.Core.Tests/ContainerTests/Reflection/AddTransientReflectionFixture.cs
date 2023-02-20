@@ -4,18 +4,18 @@ using DIContainer.Tests.TestContext.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace DIContainer.Tests.ContainerTests.Lambda;
+namespace DIContainer.Tests.ContainerTests.Reflection;
 
 [TestFixture]
-public class AddSingletonLambdaTests : LambdaTestBase
+public class AddTransientReflectionFixture : ReflectionTestBase
 {
     [Test]
-    public void AddSingletonInstance_NotNull()
+    public void AddTransientInstances_NotNull()
     {
         Builder
-            .AddSingleton<IPersonService, PersonService>()
-            .AddSingleton<IRandomGuidService, RandomGuidService>()
-            .AddSingleton<ICarService, CarService>()
+            .AddTransient<IPersonService, PersonService>()
+            .AddTransient<IRandomGuidService, RandomGuidService>()
+            .AddTransient<ICarService, CarService>()
             .Build()
             .CreateScope()
             .Resolve<ICarService>()
@@ -24,34 +24,34 @@ public class AddSingletonLambdaTests : LambdaTestBase
     }
     
     [Test]
-    public void SingletonInstancesFromOneScope_ShouldBe_Same()
+    public void TransientInstancesInOneScope_ShouldBe_NotSame()
     {
         var actualContainer = Builder
-            .AddSingleton<IRandomGuidService, RandomGuidService>()
-            .AddSingleton<IPersonService, PersonService>()
-            .AddSingleton<ICarService, CarService>()
+            .AddTransient<IRandomGuidService, RandomGuidService>()
+            .AddTransient<IPersonService, PersonService>()
+            .AddTransient<ICarService, CarService>()
             .Build();
 
         var scope = actualContainer.CreateScope();
         
         var firstExpectedInstance = scope
             .Resolve<ICarService>();
-        
+            
         var secondExpectedInstance = scope
             .Resolve<ICarService>();
-            
+   
         firstExpectedInstance
             .Should()
-            .BeSameAs(secondExpectedInstance);
+            .NotBeSameAs(secondExpectedInstance);
     }
     
     [Test]
-    public void SingletonInstancesFromScopes_ShouldBe_Same()
+    public void TransientInstancesInScopes_ShouldBe_NotSame()
     {
         var actualContainer = Builder
-            .AddSingleton<IRandomGuidService, RandomGuidService>()
-            .AddSingleton<IPersonService, PersonService>()
-            .AddSingleton<ICarService, CarService>()
+            .AddTransient<IRandomGuidService, RandomGuidService>()
+            .AddTransient<IPersonService, PersonService>()
+            .AddTransient<ICarService, CarService>()
             .Build();
 
         var scope1 = actualContainer.CreateScope();
@@ -59,12 +59,12 @@ public class AddSingletonLambdaTests : LambdaTestBase
         
         var firstExpectedInstance = scope1
             .Resolve<ICarService>();
-        
+            
         var secondExpectedInstance = scope2
             .Resolve<ICarService>();
-            
+   
         firstExpectedInstance
             .Should()
-            .BeSameAs(secondExpectedInstance);
+            .NotBeSameAs(secondExpectedInstance);
     }
 }

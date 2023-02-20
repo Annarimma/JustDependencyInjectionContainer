@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Threading.Tasks;
 using DIContainer.Core.Abstraction;
 using DIContainer.Core.Enums;
@@ -40,6 +41,16 @@ namespace DIContainer.Core.Container
                 {
                     return _container._rootScope.Resolve(@interface);
                 }
+            }
+
+            public bool IsRegistered<TInterface>()
+            {
+                return IsRegistered(typeof(TInterface));
+            }
+            
+            private bool IsRegistered(Type @interface)
+            {
+                return _scopedInstances.Any(k => k.Key == @interface);
             }
 
             private object CreateDisposableInstance(Type @interface)
@@ -166,6 +177,11 @@ namespace DIContainer.Core.Container
         public ValueTask DisposeAsync()
         {
             return _rootScope.DisposeAsync();
+        }
+        
+        public bool IsRegistered<TInterface>()
+        {
+            return CreateScope().IsRegistered<TInterface>();
         }
     }
 }
