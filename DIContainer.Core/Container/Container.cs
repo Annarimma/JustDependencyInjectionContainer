@@ -2,10 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 using System.Threading.Tasks;
 using DIContainer.Core.Abstraction;
-using DIContainer.Core.Cache;
 using DIContainer.Core.Enums;
 using DIContainer.Core.ErrorHandler;
 using DIContainer.Core.MetaInfo;
@@ -90,9 +88,11 @@ namespace DIContainer.Core.Container
         private readonly ImmutableDictionary<Type, ServiceMetaInfo> _serviceDescriptors;
         private readonly ConcurrentDictionary<Type, Func<IScope, object>> _builtActivators = new();
         private readonly Scope _rootScope;
+        private readonly IActivationBuilder _builder;
 
-        public Container(IEnumerable<ServiceMetaInfo> serviceDescriptors)
+        public Container(IEnumerable<ServiceMetaInfo> serviceDescriptors, IActivationBuilder builder)
         {
+            _builder = builder;
             _serviceDescriptors = serviceDescriptors.ToImmutableDictionary(k => k.InterfaceType);
             _rootScope = new Scope(this);
         }
@@ -132,10 +132,8 @@ namespace DIContainer.Core.Container
                 case FactoryBasedServiceDescriptor factoryDescriptor:
                     return factoryDescriptor.Factory;
             }
-            
-            // todo can we use cached args?
-            var implementationType = GetImplementationType(descriptor);
-            return scope => GetImplementation(scope, implementationType);
+
+            return _builder.BuildActivation(descriptor);
         }
         
         /// <summary>
@@ -158,44 +156,6 @@ namespace DIContainer.Core.Container
             }
 
             return descriptor;
-        }
-
-        /// <summary>
-        /// Return implementation type by descriptor
-        /// </summary>
-        /// <param name="descriptor">Descriptor</param>
-        /// <returns>Implementation type</returns>
-        /// <exception cref="InjectionException">Then Interface or Abstract Class can't be instantiated</exception>
-        private static Type GetImplementationType(ServiceMetaInfo descriptor)
-        {
-            var typeDescriptor = (TypeBasedServiceDescriptor)descriptor;
-            var implementationType = typeDescriptor.ImplementationType;
-
-            if (implementationType.IsAbstract || implementationType.IsInterface)
-            {
-                throw new InjectionException(InjectionException.CANNOT_INSTANTIATE_INTERFACE);
-            }
-
-            return implementationType;
-        }
-        
-        /// <summary>
-        /// Return object instance of requested Implementation Type
-        /// </summary>
-        /// <param name="scope">Scope</param>
-        /// <param name="implementationType">Implementation Type</param>
-        /// <returns>Object instance</returns>
-        private object GetImplementation(IScope scope, Type implementationType)
-        {
-            var constructorInfo = CachedConstructors.GetConstructor(implementationType);
-
-            var parameters = CachedParameters
-                .GetParameters(constructorInfo)
-                .Select(x => GetInstance(x.ParameterType, scope))
-                .ToArray();
-
-            var implementation = constructorInfo.Invoke(parameters);
-            return implementation;
         }
 
         public void Dispose()

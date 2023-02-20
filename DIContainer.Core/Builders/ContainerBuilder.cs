@@ -14,7 +14,7 @@ namespace DIContainer.Core.Builders
         // like ConfigureServices
         public IContainer Build()
         {
-            return new Container.Container(_serviceDescriptors);
+            return new Container.Container(_serviceDescriptors, new ReflectionActivationBuilder());
         }
 
         public void Register(ServiceMetaInfo descriptor)
