@@ -1,6 +1,8 @@
-﻿namespace DIContainer.Core.Abstraction
+﻿using System;
+
+namespace DIContainer.Core.Abstraction
 {
-    public interface IContainer
+    public interface IContainer: IDisposable, IAsyncDisposable
     {
         IScope CreateScope();
     }

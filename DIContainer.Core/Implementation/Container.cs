@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading.Tasks;
 using DIContainer.Core.Abstraction;
 using DIContainer.Core.Cache;
 using DIContainer.Core.Enums;
@@ -16,7 +17,8 @@ namespace DIContainer.Core.Implementation
         private sealed class Scope : IScope
         {
             private readonly Container _container;
-            private readonly ConcurrentDictionary<Type, object> _scopedInstances = new();    
+            private readonly ConcurrentDictionary<Type, object> _scopedInstances = new();
+            private readonly ConcurrentStack<object> _disposables = new();
 
             public Scope(Container container)
             {
@@ -29,7 +31,7 @@ namespace DIContainer.Core.Implementation
                 
                 if (descriptor.LifeTime == LifeTime.Transient)
                 {
-                    return _container.GetInstance(@interface, this);
+                    return CreateDisposableInstance(@interface);
                 }
                 
                 if (descriptor.LifeTime == LifeTime.Scoped || this == _container._rootScope)
@@ -39,6 +41,48 @@ namespace DIContainer.Core.Implementation
                 else
                 {
                     return _container._rootScope.Resolve(@interface);
+                }
+            }
+
+            private object CreateDisposableInstance(Type @interface)
+            {
+                var result = _container.GetInstance(@interface, this);
+                if (result is IDisposable || result is IAsyncDisposable)
+                {
+                    _disposables.Push(result);
+                }
+
+                return result;
+            }
+
+            public void Dispose()
+            {
+                foreach (var item in _disposables)
+                {
+                    if (item is IDisposable d)
+                    {
+                        d.Dispose();
+                    }
+                    else if (item is IAsyncDisposable ad)
+                    {
+                        // the program may hang.
+                        ad.DisposeAsync().GetAwaiter().GetResult();
+                    }
+                }
+            }
+
+            public async ValueTask DisposeAsync()
+            {
+                foreach (var item in _disposables)
+                {
+                    if (item is IAsyncDisposable ad)
+                    {
+                        await ad.DisposeAsync();
+                    }
+                    else if (item is IDisposable d)
+                    {
+                        d.Dispose();
+                    }
                 }
             }
         };
@@ -152,6 +196,16 @@ namespace DIContainer.Core.Implementation
 
             var implementation = constructorInfo.Invoke(parameters);
             return implementation;
+        }
+
+        public void Dispose()
+        {
+            _rootScope.Dispose();
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            return _rootScope.DisposeAsync();
         }
     }
 }
