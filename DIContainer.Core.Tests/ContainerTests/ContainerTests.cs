@@ -1,6 +1,6 @@
 using DIContainer.Core.Extensions;
-using DIContainer.Tests.Abstractions;
-using DIContainer.Tests.Models;
+using DIContainer.Tests.TestContext.Abstractions;
+using DIContainer.Tests.TestContext.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
