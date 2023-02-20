@@ -4,10 +4,9 @@ using DIContainer.Tests.TestContext.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace DIContainer.Tests.ContainerTests;
+namespace DIContainer.Tests.ContainerTests.Lambda;
 
-[TestFixture]
-public class AddTransientTests : TestBase
+public class AddTransientLambdaTests : LambdaTestBase
 {
     [Test]
     public void AddTransientInstances_NotNull()

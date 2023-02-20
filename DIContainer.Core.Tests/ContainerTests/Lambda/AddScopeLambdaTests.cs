@@ -4,10 +4,9 @@ using DIContainer.Tests.TestContext.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace DIContainer.Tests.ContainerTests;
+namespace DIContainer.Tests.ContainerTests.Lambda;
 
-[TestFixture]
-public class AddScopeTests : TestBase
+public class AddScopeLambdaTests : LambdaTestBase
 {
     [Test]
     public void TwoInstancesFromOneScope_ShouldBe_Same()

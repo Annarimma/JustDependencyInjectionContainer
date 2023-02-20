@@ -1,16 +1,16 @@
 using DIContainer.Core.Builders;
 using NUnit.Framework;
 
-namespace DIContainer.Tests.ContainerTests;
+namespace DIContainer.Tests.ContainerTests.Lambda;
 
-public class TestBase
+public class LambdaTestBase
 {
     protected ContainerBuilder Builder;
 
     [SetUp]
     public void BeforeEach()
     {
-        Builder = new ContainerBuilder();
+        Builder = new ContainerBuilder(new LambdaActivationBuilder());
     }
 
     [TearDown]
