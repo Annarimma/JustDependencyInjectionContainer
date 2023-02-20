@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DIContainer.Tests.Abstractions
+namespace DIContainer.Tests.Context.Abstractions
 {
     public interface IPersonService
     {
