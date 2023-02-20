@@ -16,7 +16,7 @@ public static class TypeBased
     /// <param name="builder">Container builder</param>
     /// <param name="interface">Type of Interface</param>
     /// <param name="implementation">Type of Implementation</param>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static IContainerBuilder AddSingleton(this IContainerBuilder builder,
         Type @interface, Type implementation)
     {
@@ -29,7 +29,7 @@ public static class TypeBased
     /// <param name="builder">Container builder</param>
     /// <param name="implementation">Type of Implementation</param>
     /// <typeparam name="TInterface">Type of Interface</typeparam>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static IContainerBuilder AddSingleton<TInterface>(this IContainerBuilder builder, Type implementation)
     {
         return builder.RegisterType(typeof(TInterface), implementation, LifeTime.Singleton);
@@ -41,7 +41,7 @@ public static class TypeBased
     /// <param name="builder">Container builder</param>
     /// <typeparam name="TInterface">Type of Interface</typeparam>
     /// <typeparam name="TImplementation">Type of Implementation</typeparam>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static  IContainerBuilder AddSingleton<TInterface, TImplementation>(this IContainerBuilder builder) 
         where TInterface : class 
         where TImplementation : class, TInterface
@@ -55,7 +55,7 @@ public static class TypeBased
     /// <param name="builder">Container builder</param>
     /// <param name="interface">Type of Interface</param>
     /// <param name="implementation">Type of Implementation</param>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static IContainerBuilder AddTransient(this IContainerBuilder builder,
         Type @interface,
         Type implementation)
@@ -69,7 +69,7 @@ public static class TypeBased
     /// <param name="builder">Container builder</param>
     /// <param name="implementation">Type of Implementation</param>
     /// <typeparam name="TInterface">Type of Interface</typeparam>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static  IContainerBuilder AddTransient<TInterface>(this IContainerBuilder builder,
         Type implementation) 
         where TInterface : class
@@ -83,7 +83,7 @@ public static class TypeBased
     /// <param name="builder">Container builder</param>
     /// <typeparam name="TInterface">Type of Interface</typeparam>
     /// <typeparam name="TImplementation">Type of Implementation</typeparam>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static  IContainerBuilder AddTransient<TInterface, TImplementation>(this IContainerBuilder builder) 
         where TInterface : class 
         where TImplementation : class, TInterface
@@ -97,7 +97,7 @@ public static class TypeBased
     /// <param name="builder">Container builder</param>
     /// <param name="interface">Type of Interface</param>
     /// <param name="implementation">Type of Implementation</param>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static IContainerBuilder AddScoped(this IContainerBuilder builder,
         Type @interface,
         Type implementation)
@@ -111,7 +111,7 @@ public static class TypeBased
     /// <param name="builder">Container builder</param>
     /// <param name="implementation">Type of Implementation</param>
     /// <typeparam name="TInterface">Type of Interface</typeparam>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static  IContainerBuilder AddScoped<TInterface>(this IContainerBuilder builder,
         Type implementation) 
         where TInterface : class
@@ -125,7 +125,7 @@ public static class TypeBased
     /// <param name="builder">Container builder</param>
     /// <typeparam name="TInterface">Type of Interface</typeparam>
     /// <typeparam name="TImplementation">Type of Implementation</typeparam>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static IContainerBuilder AddScoped<TInterface, TImplementation>(this IContainerBuilder builder) 
         where TInterface : class
         where TImplementation : class, TInterface
@@ -139,8 +139,8 @@ public static class TypeBased
     /// <param name="builder">Container builder</param>
     /// <param name="interface">Type of Interface</param>
     /// <param name="implementation">Type of Implementation</param>
-    /// <param name="lifeTime">Life Time</param>
-    /// <returns>IContainerBuilder</returns>
+    /// <param name="lifeTime">Life Time: singleton, transient or scoped</param>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     private static IContainerBuilder RegisterType(
         this IContainerBuilder builder,
         Type @interface,

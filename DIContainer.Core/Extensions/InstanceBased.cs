@@ -15,7 +15,7 @@ public static class InstanceBased
     /// <param name="builder">Container builder</param>
     /// <param name="interface">Type of Interface</param>
     /// <param name="instance">Instance</param>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static IContainerBuilder AddSingleton(this IContainerBuilder builder,
         Type @interface,
         object instance)
@@ -29,7 +29,7 @@ public static class InstanceBased
     /// <param name="builder">Container builder</param>
     /// <param name="instance">Instance</param>
     /// <typeparam name="TInterface">Type of Interface</typeparam>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static IContainerBuilder AddSingleton<TInterface>(this IContainerBuilder builder,
         object instance)
     {
@@ -42,7 +42,7 @@ public static class InstanceBased
     /// <param name="builder">Container builder</param>
     /// <param name="interface">Type of Interface</param>
     /// <param name="instance">Instance</param>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     private static IContainerBuilder RegisterInstance(this IContainerBuilder builder, 
         Type @interface, 
         object instance)

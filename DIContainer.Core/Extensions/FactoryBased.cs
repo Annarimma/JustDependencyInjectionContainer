@@ -16,7 +16,7 @@ public static class FactoryBased
     /// <param name="builder">Container builder</param>
     /// <param name="interface">Type of Interface</param>
     /// <param name="factory">Factory</param>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static IContainerBuilder AddSingleton(this IContainerBuilder builder,
         Type @interface, 
         Func<IScope, object> factory)
@@ -30,7 +30,7 @@ public static class FactoryBased
     /// <param name="builder">Container builder</param>
     /// <param name="interface">Type of Interface</param>
     /// <param name="factory">Factory</param>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static IContainerBuilder AddTransient(this IContainerBuilder builder,
         Type @interface, 
         Func<IScope, object> factory)
@@ -44,7 +44,7 @@ public static class FactoryBased
     /// <param name="builder">Container builder</param>
     /// <param name="interface">Type of Interface</param>
     /// <param name="factory">Factory</param>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     public static IContainerBuilder AddScoped(this IContainerBuilder builder,
         Type @interface, 
         Func<IScope, object> factory)
@@ -59,7 +59,7 @@ public static class FactoryBased
     /// <param name="interface">Type of Interface</param>
     /// <param name="factory">Factory</param>
     /// <param name="lifeTime">Life Time</param>
-    /// <returns>IContainerBuilder</returns>
+    /// <returns><see cref="IContainerBuilder"/></returns>
     private static IContainerBuilder RegisterFactory(
         this IContainerBuilder builder,
         Type @interface,

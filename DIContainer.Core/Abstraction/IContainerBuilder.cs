@@ -9,7 +9,6 @@ namespace DIContainer.Core.Abstraction
     {
         IContainer Build();
 
-        // todo or just Add ?
         void Register(ServiceMetaInfo descriptor);
     }
 }
