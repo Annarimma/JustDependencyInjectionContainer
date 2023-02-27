@@ -6,73 +6,104 @@ using DIContainer.Core.MetaInfo;
 namespace DIContainer.Core.Extensions;
 
 /// <summary>
-/// Type Based Service Descriptor Extensions
+/// Type Based Service Descriptor Extensions.
 /// </summary>
 public static class TypeBased
 {
     /// <summary>
-    /// Singleton registration
+    /// Singleton registration.
     /// </summary>
-    /// <param name="builder">Container builder</param>
-    /// <param name="interface">Type of Interface</param>
-    /// <param name="implementation">Type of Implementation</param>
-    /// <returns>IContainerBuilder</returns>
-    public static IContainerBuilder AddSingleton(this IContainerBuilder builder,
-        Type @interface, Type implementation)
+    /// <param name="builder">Container builder.</param>
+    /// <param name="interface">Type of Interface.</param>
+    /// <param name="implementation">Type of Implementation.</param>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
+    public static IContainerBuilder AddSingleton(
+        this IContainerBuilder builder,
+        Type @interface,
+        Type implementation)
     {
         return builder.RegisterType(@interface, implementation, LifeTime.Singleton);
     }
 
     /// <summary>
-    /// Singleton registration
+    /// Singleton registration.
     /// </summary>
-    /// <param name="builder">Container builder</param>
-    /// <typeparam name="TInterface">Type of Interface</typeparam>
-    /// <typeparam name="TImplementation">Type of Implementation</typeparam>
-    /// <returns>IContainerBuilder</returns>
-    public static  IContainerBuilder AddSingleton<TInterface, TImplementation>(this IContainerBuilder builder) 
-        where TInterface : class 
+    /// <param name="builder">Container builder.</param>
+    /// <param name="implementation">Type of Implementation.</param>
+    /// <typeparam name="TInterface">Type of Interface.</typeparam>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
+    public static IContainerBuilder AddSingleton<TInterface>(this IContainerBuilder builder, Type implementation)
+    {
+        return builder.RegisterType(typeof(TInterface), implementation, LifeTime.Singleton);
+    }
+
+    /// <summary>
+    /// Singleton registration.
+    /// </summary>
+    /// <param name="builder">Container builder.</param>
+    /// <typeparam name="TInterface">Type of Interface.</typeparam>
+    /// <typeparam name="TImplementation">Type of Implementation.</typeparam>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
+    public static IContainerBuilder AddSingleton<TInterface, TImplementation>(this IContainerBuilder builder)
+        where TInterface : class
         where TImplementation : class, TInterface
     {
         return builder.RegisterType(typeof(TInterface), typeof(TImplementation), LifeTime.Singleton);
     }
-    
+
     /// <summary>
-    /// Transient registration
+    /// Transient registration.
     /// </summary>
-    /// <param name="builder">Container builder</param>
-    /// <param name="interface">Type of Interface</param>
-    /// <param name="implementation">Type of Implementation</param>
-    /// <returns>IContainerBuilder</returns>
-    public static IContainerBuilder AddTransient(this IContainerBuilder builder,
+    /// <param name="builder">Container builder.</param>
+    /// <param name="interface">Type of Interface.</param>
+    /// <param name="implementation">Type of Implementation.</param>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
+    public static IContainerBuilder AddTransient(
+        this IContainerBuilder builder,
         Type @interface,
         Type implementation)
     {
         return builder.RegisterType(@interface, implementation, LifeTime.Transient);
     }
-    
+
     /// <summary>
-    /// Transient registration
+    /// Singleton registration.
     /// </summary>
-    /// <param name="builder">Container builder</param>
-    /// <typeparam name="TInterface">Type of Interface</typeparam>
-    /// <typeparam name="TImplementation">Type of Implementation</typeparam>
-    /// <returns>IContainerBuilder</returns>
-    public static  IContainerBuilder AddTransient<TInterface, TImplementation>(this IContainerBuilder builder) 
-        where TInterface : class 
+    /// <param name="builder">Container builder.</param>
+    /// <param name="implementation">Type of Implementation.</param>
+    /// <typeparam name="TInterface">Type of Interface.</typeparam>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
+    public static IContainerBuilder AddTransient<TInterface>(
+        this IContainerBuilder builder,
+        Type implementation)
+        where TInterface : class
+    {
+        return builder.RegisterType(typeof(TInterface), implementation, LifeTime.Transient);
+    }
+
+    /// <summary>
+    /// Transient registration.
+    /// </summary>
+    /// <param name="builder">Container builder.</param>
+    /// <typeparam name="TInterface">Type of Interface.</typeparam>
+    /// <typeparam name="TImplementation">Type of Implementation.</typeparam>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
+    public static IContainerBuilder AddTransient<TInterface, TImplementation>(this IContainerBuilder builder)
+        where TInterface : class
         where TImplementation : class, TInterface
     {
         return builder.RegisterType(typeof(TInterface), typeof(TImplementation), LifeTime.Transient);
     }
 
     /// <summary>
-    /// Scoped registration
+    /// Scoped registration.
     /// </summary>
-    /// <param name="builder">Container builder</param>
-    /// <param name="interface">Type of Interface</param>
-    /// <param name="implementation">Type of Implementation</param>
-    /// <returns>IContainerBuilder</returns>
-    public static IContainerBuilder AddScoped(this IContainerBuilder builder,
+    /// <param name="builder">Container builder.</param>
+    /// <param name="interface">Type of Interface.</param>
+    /// <param name="implementation">Type of Implementation.</param>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
+    public static IContainerBuilder AddScoped(
+        this IContainerBuilder builder,
         Type @interface,
         Type implementation)
     {
@@ -80,27 +111,42 @@ public static class TypeBased
     }
 
     /// <summary>
-    /// Scoped registration
+    /// Scope registration.
     /// </summary>
-    /// <param name="builder">Container builder</param>
-    /// <typeparam name="TInterface">Type of Interface</typeparam>
-    /// <typeparam name="TImplementation">Type of Implementation</typeparam>
-    /// <returns>IContainerBuilder</returns>
-    public static IContainerBuilder AddScoped<TInterface, TImplementation>(this IContainerBuilder builder) 
+    /// <param name="builder">Container builder.</param>
+    /// <param name="implementation">Type of Implementation.</param>
+    /// <typeparam name="TInterface">Type of Interface.</typeparam>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
+    public static IContainerBuilder AddScoped<TInterface>(
+        this IContainerBuilder builder,
+        Type implementation)
+        where TInterface : class
+    {
+        return builder.RegisterType(typeof(TInterface), implementation, LifeTime.Scoped);
+    }
+
+    /// <summary>
+    /// Scoped registration.
+    /// </summary>
+    /// <param name="builder">Container builder.</param>
+    /// <typeparam name="TInterface">Type of Interface.</typeparam>
+    /// <typeparam name="TImplementation">Type of Implementation.</typeparam>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
+    public static IContainerBuilder AddScoped<TInterface, TImplementation>(this IContainerBuilder builder)
         where TInterface : class
         where TImplementation : class, TInterface
     {
         return builder.RegisterType(typeof(TInterface), typeof(TImplementation), LifeTime.Scoped);
     }
-    
+
     /// <summary>
-    /// General method for Type Based Service Descriptors
+    /// General method for Type Based Service Descriptors.
     /// </summary>
-    /// <param name="builder">Container builder</param>
-    /// <param name="interface">Type of Interface</param>
-    /// <param name="implementation">Type of Implementation</param>
-    /// <param name="lifeTime">Life Time</param>
-    /// <returns>IContainerBuilder</returns>
+    /// <param name="builder">Container builder.</param>
+    /// <param name="interface">Type of Interface.</param>
+    /// <param name="implementation">Type of Implementation.</param>
+    /// <param name="lifeTime">Life Time: singleton, transient or scoped.</param>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
     private static IContainerBuilder RegisterType(
         this IContainerBuilder builder,
         Type @interface,
@@ -111,7 +157,7 @@ public static class TypeBased
         {
             ImplementationType = implementation,
             InterfaceType = @interface,
-            LifeTime = lifeTime
+            LifeTime = lifeTime,
         });
 
         return builder;

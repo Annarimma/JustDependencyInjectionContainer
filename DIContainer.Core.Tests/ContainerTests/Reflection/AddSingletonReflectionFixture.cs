@@ -4,10 +4,10 @@ using DIContainer.Tests.TestContext.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace DIContainer.Tests.ContainerTests;
+namespace DIContainer.Tests.ContainerTests.Reflection;
 
 [TestFixture]
-public class AddSingletonTests : TestBase
+public class AddSingletonReflectionFixture : ReflectionTestBase
 {
     [Test]
     public void AddSingletonInstance_NotNull()

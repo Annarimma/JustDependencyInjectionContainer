@@ -4,10 +4,9 @@ using DIContainer.Tests.TestContext.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace DIContainer.Tests.ContainerTests;
+namespace DIContainer.Tests.ContainerTests.Lambda;
 
-[TestFixture]
-public class AddTransientTests : TestBase
+public class AddTransientLambdaFixture : LambdaTestBase
 {
     [Test]
     public void AddTransientInstances_NotNull()
@@ -22,7 +21,7 @@ public class AddTransientTests : TestBase
             .Should()
             .NotBeNull();
     }
-    
+
     [Test]
     public void TransientInstancesInOneScope_ShouldBe_NotSame()
     {
