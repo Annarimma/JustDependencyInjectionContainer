@@ -20,12 +20,11 @@ public abstract class BaseActivationBuilder
     /// <returns>Creation Delegate.</returns>
     public Func<IScope, object> BuildActivation(ServiceMetaInfo descriptor)
     {
-        var typeDescriptor = (TypeBasedServiceDescriptor)descriptor;
-        var implementationType = GetImplementationType(descriptor);
+        var serviceMetaInfo = descriptor;
+        var implementationType = GetImplementationType(serviceMetaInfo);
         var ctor = GetConstructorInfo(implementationType);
         var args = ctor.GetParameters();
-
-        return BuildActivationInternal(typeDescriptor, ctor, args);
+        return BuildActivationInternal((TypeBasedServiceDescriptor)serviceMetaInfo, ctor, args);
     }
 
     /// <summary>
@@ -59,32 +58,7 @@ public abstract class BaseActivationBuilder
         return implementationType;
     }
 
-    /// <summary>
-    /// Return object instance of requested Implementation Type.
-    /// </summary>
-    /// <param name="scope">Scope.</param>
-    /// <param name="implementationType">Implementation Type.</param>
-    /// <returns>Object instance.</returns>
-    /// <exception cref="ArgumentNullException">When scope is null.</exception>
-    protected object GetImplementation(IScope scope, Type implementationType)
-    {
-        if (scope == null)
-        {
-            throw new ArgumentNullException(nameof(scope));
-        }
-
-        var constructorInfo = GetConstructorInfo(implementationType);
-
-        var parameters = CachedParameters
-            .GetParameters(constructorInfo)
-            .Select(x => scope.Resolve(x.ParameterType))
-            .ToArray();
-
-        var implementation = constructorInfo.Invoke(parameters);
-        return implementation;
-    }
-
-    private static ConstructorInfo GetConstructorInfo(Type implementationType)
+    protected ConstructorInfo GetConstructorInfo(Type implementationType)
     {
         var constructorInfo = CachedConstructors.GetOrAddConstructor(implementationType);
         return constructorInfo;

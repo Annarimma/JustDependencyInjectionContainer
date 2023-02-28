@@ -17,7 +17,7 @@ public interface IScope : IDisposable, IAsyncDisposable
     /// <summary>
     /// Determine whether or not a service has been registered.
     /// </summary>
-    /// <typeparam name="TInterface">The service to test for the registration of.</typeparam>
+    /// <param name="interface">Type.</param>
     /// <returns>True if the service is registered.</returns>
-    bool IsRegistered<TInterface>();
+    public bool IsRegistered(Type @interface);
 }

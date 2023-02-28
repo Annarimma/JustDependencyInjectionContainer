@@ -16,4 +16,15 @@ public static class ScopeExtensions
     public static T Resolve<T>(this IScope scope)
         where T : class
         => (T)scope.Resolve(typeof(T));
+
+    /// <summary>
+    /// Generic extension of IsRegistered method.
+    /// </summary>
+    /// <param name="scope">Scope.</param>
+    /// <typeparam name="TInterface">Type.</typeparam>
+    /// <returns>True, if type is registered.</returns>
+    public static bool IsRegistered<TInterface>(this IScope scope)
+    {
+        return scope.IsRegistered(typeof(TInterface));
+    }
 }

@@ -48,10 +48,7 @@ namespace DIContainer.Core.Container
                 }
             }
 
-            public bool IsRegistered<TInterface>()
-            {
-                return IsRegistered(typeof(TInterface));
-            }
+            #region IDisposable
 
             public void Dispose()
             {
@@ -84,7 +81,9 @@ namespace DIContainer.Core.Container
                 }
             }
 
-            private bool IsRegistered(Type @interface)
+            #endregion
+
+            public bool IsRegistered(Type @interface)
             {
                 return _scopedInstances.Any(k => k.Key == @interface);
             }
@@ -119,6 +118,8 @@ namespace DIContainer.Core.Container
             _rootScope = new Scope(this);
         }
 
+        #region IScope
+
         /// <summary>
         /// Create new scope.
         /// </summary>
@@ -127,6 +128,10 @@ namespace DIContainer.Core.Container
         {
             return new Scope(this);
         }
+
+        #endregion
+
+        #region IDisposable
 
         /// <summary>
         /// Dispose method for container.
@@ -144,15 +149,7 @@ namespace DIContainer.Core.Container
             return _rootScope.DisposeAsync();
         }
 
-        /// <summary>
-        /// Determine whether or not a service has been registered.
-        /// </summary>
-        /// <typeparam name="TInterface">The service to test for the registration of.</typeparam>
-        /// <returns>True if the service is registered.</returns>
-        public bool IsRegistered<TInterface>()
-        {
-            return CreateScope().IsRegistered<TInterface>();
-        }
+        #endregion
 
         /// <summary>
         /// Get instance by interface type and scope.
