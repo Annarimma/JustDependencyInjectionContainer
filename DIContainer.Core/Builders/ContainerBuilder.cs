@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DIContainer.Core.Abstraction;
 using DIContainer.Core.MetaInfo;
 
@@ -28,7 +27,7 @@ namespace DIContainer.Core.Builders
         /// <returns><see cref="IContainer"/>New container.</returns>
         public IContainer Build()
         {
-            return new Container.Container(_serviceDescriptors, _builder);
+            return new Container(_serviceDescriptors, _builder);
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ using DIContainer.Core.Enums;
 using DIContainer.Core.ErrorHandler;
 using DIContainer.Core.MetaInfo;
 
-namespace DIContainer.Core.Container
+namespace DIContainer.Core.Builders
 {
     /// <summary>
     /// Container class for dependencies managing.
