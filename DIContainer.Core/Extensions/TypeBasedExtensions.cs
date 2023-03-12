@@ -8,7 +8,7 @@ namespace DIContainer.Core.Extensions;
 /// <summary>
 /// Type Based Service Descriptor Extensions.
 /// </summary>
-public static class TypeBased
+public static class TypeBasedExtensions
 {
     /// <summary>
     /// Singleton registration.
@@ -144,18 +144,18 @@ public static class TypeBased
     /// </summary>
     /// <param name="builder">Container builder.</param>
     /// <param name="interface">Type of Interface.</param>
-    /// <param name="implementation">Type of Implementation.</param>
+    /// <param name="instanceType">Type of Instance.</param>
     /// <param name="lifeTime">Life Time: singleton, transient or scoped.</param>
     /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
     private static IContainerBuilder RegisterType(
         this IContainerBuilder builder,
         Type @interface,
-        Type implementation,
+        Type instanceType,
         LifeTime lifeTime)
     {
-        builder.Register(new TypeBasedServiceDescriptor()
+        builder.Register(new TypeBasedServiceDescriptor(@interface)
         {
-            ImplementationType = implementation,
+            InstanceType = instanceType,
             InterfaceType = @interface,
             LifeTime = lifeTime,
         });
