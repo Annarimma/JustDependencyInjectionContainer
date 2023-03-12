@@ -8,13 +8,15 @@ namespace DIContainer.Tests.ContainerBuilderTests.Base;
 public class ContainerBuilderTestBase
 {
     protected List<IContainerBuilder> Builders;
+    protected IContainerBuilder ReflectiveBuilder;
 
     [SetUp]
     public void BeforeEach()
     {
+        ReflectiveBuilder = new ContainerBuilder(new ReflectionActivationBuilder());
         Builders = new List<IContainerBuilder>()
         {
-            new ContainerBuilder(new ReflectionActivationBuilder()),
+            ReflectiveBuilder,
             new ContainerBuilder(new LambdaActivationBuilder()),
         };
     }
@@ -22,6 +24,7 @@ public class ContainerBuilderTestBase
     [TearDown]
     public void AfterEach()
     {
+        ReflectiveBuilder = null;
         Builders = new List<IContainerBuilder>();
     }
     

@@ -48,14 +48,14 @@ public abstract class BaseActivationBuilder
     protected Type GetImplementationType(ServiceMetaInfo descriptor)
     {
         var typeDescriptor = (TypeBasedServiceDescriptor)descriptor;
-        var implementationType = typeDescriptor.ImplementationType;
+        var instanceType = typeDescriptor.InstanceType;
 
-        if (implementationType.IsAbstract || implementationType.IsInterface)
+        if (instanceType.IsAbstract || instanceType.IsInterface)
         {
             throw new InjectionException(InjectionException.CANNOT_INSTANTIATE_INTERFACE);
         }
 
-        return implementationType;
+        return instanceType;
     }
 
     protected ConstructorInfo GetConstructorInfo(Type implementationType)

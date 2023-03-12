@@ -8,7 +8,7 @@ namespace DIContainer.Core.Extensions;
 /// <summary>
 /// Factory Based Service Descriptor Extensions.
 /// </summary>
-public static class FactoryBased
+public static class FactoryBasedExtensions
 {
     /// <summary>
     /// Singleton registration.

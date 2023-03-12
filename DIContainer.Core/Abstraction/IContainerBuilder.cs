@@ -1,4 +1,6 @@
-﻿using DIContainer.Core.MetaInfo;
+﻿using System;
+using System.Collections.Generic;
+using DIContainer.Core.MetaInfo;
 
 namespace DIContainer.Core.Abstraction
 {
@@ -11,12 +13,16 @@ namespace DIContainer.Core.Abstraction
         /// Build container.
         /// </summary>
         /// <returns><see cref="IContainer"/> - Created container.</returns>
-        IContainer Build();
+        public IContainer Build();
 
         /// <summary>
         /// Register dependency.
         /// </summary>
         /// <param name="descriptor">Service information.</param>
-        void Register(ServiceMetaInfo descriptor);
+        public IContainerBuilder Register(ServiceMetaInfo descriptor);
+
+        public IContainerBuilder As(Type @interface);
+
+        public IContainerBuilder Register<T>() where T : class;
     }
 }

@@ -8,8 +8,8 @@
 AddSingleton<IService, Service>()
 AddTransient<IService, Service>()
 AddScope<IService, Service>()
+Register<>().As<>()
 ```
-* register transient scope;
 
 ## How to use
 

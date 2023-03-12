@@ -5,7 +5,7 @@ namespace DIContainer.Core.Extensions;
 /// <summary>
 /// Scope Extensions.
 /// </summary>
-public static class ScopeExtensions
+public static class ScopedExtensions
 {
     /// <summary>
     /// Generic extension of Resolve method.

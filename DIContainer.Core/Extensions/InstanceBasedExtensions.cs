@@ -7,7 +7,7 @@ namespace DIContainer.Core.Extensions;
 /// <summary>
 /// Instance Based Service Descriptor Extensions.
 /// </summary>
-public static class InstanceBased
+public static class InstanceBasedExtensions
 {
     /// <summary>
     /// Singleton registration.
