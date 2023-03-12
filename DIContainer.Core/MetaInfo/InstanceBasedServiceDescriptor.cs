@@ -6,13 +6,8 @@ namespace DIContainer.Core.MetaInfo;
 /// <summary>
 /// A singleton instance (static type object).
 /// </summary>
-public class InstanceBasedServiceDescriptor : ServiceMetaInfo
+public sealed class InstanceBasedServiceDescriptor : ServiceMetaInfo
 {
-    /// <summary>
-    /// Gets object instance.
-    /// </summary>
-    public object Instance { get; init; }
-
     /// <summary>
     /// Initializes a new instance of the <see cref="InstanceBasedServiceDescriptor"/> class.
     /// </summary>
@@ -24,4 +19,17 @@ public class InstanceBasedServiceDescriptor : ServiceMetaInfo
         InterfaceType = interfaceType;
         Instance = instance;
     }
+
+    /// <summary>
+    /// Gets object instance.
+    /// </summary>
+    public object Instance { get; }
+
+    /// <summary>
+    /// Gets a <see cref="string"/> that represents the current <see cref="object"/>.
+    /// </summary>
+    /// <returns>
+    /// A <see cref="string"/> that represents the current <see cref="object"/>.
+    /// </returns>
+    protected override string Description => InterfaceType.FullName!;
 }

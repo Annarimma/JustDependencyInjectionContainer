@@ -3,12 +3,27 @@ using System;
 namespace DIContainer.Core.MetaInfo;
 
 /// <summary>
-/// Service Implementation Class.
+/// Identifies a service according to a type to which it can be assigned.
 /// </summary>
-public class TypeBasedServiceDescriptor : ServiceMetaInfo
+public sealed class TypeBasedServiceDescriptor : ServiceMetaInfo
 {
     /// <summary>
-    /// Gets implementation type.
+    /// Initializes a new instance of the <see cref="TypeBasedServiceDescriptor"/> class.
     /// </summary>
-    public Type ImplementationType { get; init; }
+    /// <param name="serviceType">Type of the service.</param>
+    public TypeBasedServiceDescriptor(Type serviceType)
+    {
+        InterfaceType = serviceType ?? throw new ArgumentNullException(nameof(serviceType));
+    }
+
+    /// <summary>
+    /// Gets instance type.
+    /// </summary>
+    public Type InstanceType { get; init; }
+
+    /// <summary>
+    /// Gets a human-readable description of the service.
+    /// </summary>
+    /// <value>The description.</value>
+    protected override string Description => InterfaceType.FullName!;
 }
