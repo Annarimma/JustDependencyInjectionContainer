@@ -19,6 +19,14 @@ namespace DIContainer.Core.Builders
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerBuilder"/> class.
         /// </summary>
+        public ContainerBuilder()
+            : this(new ReflectionActivationBuilder())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerBuilder"/> class.
+        /// </summary>
         /// <param name="builder">Activation builder.</param>
         public ContainerBuilder(IActivationBuilder builder)
         {
