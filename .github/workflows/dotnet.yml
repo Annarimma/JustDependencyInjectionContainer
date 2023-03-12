@@ -28,3 +28,10 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Run tests
       run: dotnet test --no-restore
+      
+    - name: Coverlet coverage test
+      uses: b3b00/coverlet-action@1.2.5
+      with:
+        testProject: 'DIContainer.Core.Tests/DIContainer.Core.Tests.csproj'
+        output: 'code-coverage.info'
+        outputFormat: 'json'
