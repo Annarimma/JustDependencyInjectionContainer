@@ -28,3 +28,6 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Run tests
       run: dotnet test --no-restore
+      
+    - name: .Net Code Coverage Badge
+      uses: simon-k/dotnet-code-coverage-badge@v1.0.0
