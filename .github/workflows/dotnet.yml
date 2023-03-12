@@ -33,5 +33,5 @@ jobs:
       uses: b3b00/coverlet-action@1.2.5
       with:
         testProject: 'DIContainer.Core.Tests/DIContainer.Core.Tests.csproj'
-        output: 'code-coverage.info'
+        output: 'coverage'
         outputFormat: 'json'
