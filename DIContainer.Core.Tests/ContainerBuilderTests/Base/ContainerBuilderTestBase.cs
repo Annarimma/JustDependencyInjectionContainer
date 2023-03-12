@@ -9,15 +9,18 @@ public class ContainerBuilderTestBase
 {
     protected List<IContainerBuilder> Builders;
     protected IContainerBuilder ReflectiveBuilder;
+    protected IContainerBuilder LambdaBuilder;
 
     [SetUp]
     public void BeforeEach()
     {
         ReflectiveBuilder = new ContainerBuilder(new ReflectionActivationBuilder());
+        LambdaBuilder = new ContainerBuilder(new LambdaActivationBuilder());
+        
         Builders = new List<IContainerBuilder>()
         {
             ReflectiveBuilder,
-            new ContainerBuilder(new LambdaActivationBuilder()),
+            LambdaBuilder,
         };
     }
 
@@ -25,6 +28,7 @@ public class ContainerBuilderTestBase
     public void AfterEach()
     {
         ReflectiveBuilder = null;
+        LambdaBuilder = null;
         Builders = new List<IContainerBuilder>();
     }
     

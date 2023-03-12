@@ -7,7 +7,7 @@ using DIContainer.Sample.Models;
 
 #region Sample 1
 
-var container = new ContainerBuilder(new ReflectionActivationBuilder())
+var container = new ContainerBuilder()
     .AddSingleton<IRepository, Repository>()
     .AddScoped<IService, Service>()
     .Build();
@@ -23,7 +23,7 @@ Console.WriteLine($"First sample result should return instance of Repository typ
 
 #region Sample 2
 
-var ICInstance = new ContainerBuilder(new ReflectionActivationBuilder())
+var ICInstance = new ContainerBuilder()
     .Register<CD>() // instance type
     .As<IC>() // register interface type to created instance type
     .Build()
