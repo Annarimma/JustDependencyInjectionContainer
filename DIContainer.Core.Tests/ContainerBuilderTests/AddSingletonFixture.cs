@@ -1,3 +1,5 @@
+using System;
+using DIContainer.Core.ErrorHandler;
 using DIContainer.Core.Extensions;
 using DIContainer.Tests.ContainerBuilderTests.Base;
 using DIContainer.Tests.TestContext.Abstractions;
@@ -16,29 +18,25 @@ public class AddSingletonFixture : ContainerBuilderTestBase
         foreach (var builder in Builders)
         {
             builder
-                .AddSingleton<IPersonService, PersonService>()
-                .AddSingleton<IRandomGuidService, RandomGuidService>()
-                .AddSingleton<ICarService, CarService>()
+                .AddSingleton<IA, Abc>()
                 .Build()
                 .CreateScope()
-                .Resolve<ICarService>()
+                .Resolve<IA>()
                 .Should()
-                .BeOfType<CarService>();
+                .BeOfType<Abc>();
         }
     }
     
     [Test]
-    public void AddSingletonInstance_NotNull()
+    public void AddSingleton_TypeBasedRegistration_ShouldReturn_NotNull()
     {
         foreach (var builder in Builders)
         {
             builder
-                .AddSingleton<IPersonService, PersonService>()
-                .AddSingleton<IRandomGuidService, RandomGuidService>()
-                .AddSingleton<ICarService, CarService>()
+                .AddSingleton<IA, Abc>()
                 .Build()
                 .CreateScope()
-                .Resolve<ICarService>()
+                .Resolve<IA>()
                 .Should()
                 .NotBeNull();
         }
@@ -50,18 +48,16 @@ public class AddSingletonFixture : ContainerBuilderTestBase
         foreach (var builder in Builders)
         {
             var actualContainer = builder
-                .AddSingleton<IRandomGuidService, RandomGuidService>()
-                .AddSingleton<IPersonService, PersonService>()
-                .AddSingleton<ICarService, CarService>()
+                .AddSingleton<IA, Abc>()
                 .Build();
     
             var scope = actualContainer.CreateScope();
         
             var firstExpectedInstance = scope
-                .Resolve<ICarService>();
+                .Resolve<IA>();
         
             var secondExpectedInstance = scope
-                .Resolve<ICarService>();
+                .Resolve<IA>();
             
             firstExpectedInstance
                 .Should()
@@ -75,23 +71,90 @@ public class AddSingletonFixture : ContainerBuilderTestBase
         foreach (var builder in Builders)
         {
             var actualContainer = builder
-                .AddSingleton<IRandomGuidService, RandomGuidService>()
-                .AddSingleton<IPersonService, PersonService>()
-                .AddSingleton<ICarService, CarService>()
+                .AddSingleton<IC, Abc>()
                 .Build();
     
             var scope1 = actualContainer.CreateScope();
             var scope2 = actualContainer.CreateScope();
         
             var firstExpectedInstance = scope1
-                .Resolve<ICarService>();
+                .Resolve<IC>();
         
             var secondExpectedInstance = scope2
-                .Resolve<ICarService>();
+                .Resolve<IC>();
             
             firstExpectedInstance
                 .Should()
                 .BeSameAs(secondExpectedInstance);
         }
+    }
+
+    [Test]
+    public void DuplicationSingleton_TypeBasedRegistration_Should_ThrowException()
+    {
+        var builder = ReflectiveBuilder;
+
+        var act = () =>
+        {
+            builder
+                .AddSingleton(typeof(IA), typeof(Abc))
+                .Build();
+
+            builder
+                .AddSingleton<IA>(typeof(IA))
+                .Build();
+        };
+        
+        act
+            .Should()
+            .Throw<InjectionException>()
+            .Where(e 
+                => e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
+    }
+    
+    [Test]
+    public void DuplicationSingleton_InstanceRegistration_Should_ThrowException()
+    {
+        var builder = ReflectiveBuilder;
+
+        var act = () =>
+        {
+            builder
+                .AddSingleton(typeof(IA), new Abc())
+                .Build();
+
+            builder
+                .AddSingleton<IA>(new Abc())
+                .Build();
+        };
+        
+        act
+            .Should()
+            .Throw<InjectionException>()
+            .Where(e 
+                => e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
+    }
+    
+    [Test]
+    public void DuplicationSingleton_LambdaRegistration_Should_ThrowException()
+    {
+        var builder = ReflectiveBuilder;
+
+        var act = () =>
+        {
+            builder
+                .AddSingleton(typeof(IA), s => new Abc())
+                .Build();
+
+            builder
+                .AddSingleton<IA>(s => new Abc())
+                .Build();
+        };
+        
+        act
+            .Should()
+            .Throw<InjectionException>()
+            .Where(e 
+                => e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
     }
 }
