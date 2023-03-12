@@ -13,7 +13,7 @@ public class ContainerBenchmark
     private readonly IScope _lambdaContainer, _reflectionContainer;
     private readonly ILifetimeScope _scope;
     private readonly IServiceScope _serviceScope;
-    
+
     public ContainerBenchmark()
     {
         var lambdaBuilder = new Core.Builders.ContainerBuilder(new LambdaActivationBuilder());
@@ -35,7 +35,7 @@ public class ContainerBenchmark
 
     private ILifetimeScope InitAutofac()
     {
-        Autofac.ContainerBuilder containerBuilder = new Autofac.ContainerBuilder();
+        var containerBuilder = new Autofac.ContainerBuilder();
         containerBuilder.RegisterType<Service>().As<IService>();
         containerBuilder.RegisterType<Controller>().AsSelf();
         return containerBuilder.Build().BeginLifetimeScope();
@@ -51,7 +51,7 @@ public class ContainerBenchmark
 
     [Benchmark(Baseline = true)]
     public Controller Create() => new Controller(new Service());
-    
+
     [Benchmark]
     public Controller Reflection() => (Controller)_reflectionContainer.Resolve(typeof(Controller));
 
@@ -60,7 +60,7 @@ public class ContainerBenchmark
 
     [Benchmark]
     public Controller Autofac() => _scope.Resolve<Controller>();
-    
+
     [Benchmark]
     public Controller MSDI() => _serviceScope.ServiceProvider.GetRequiredService<Controller>();
 }

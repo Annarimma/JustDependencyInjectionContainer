@@ -16,7 +16,7 @@ public class ContainerBuilderTestBase
     {
         ReflectiveBuilder = new ContainerBuilder(new ReflectionActivationBuilder());
         LambdaBuilder = new ContainerBuilder(new LambdaActivationBuilder());
-        
+
         Builders = new List<IContainerBuilder>()
         {
             ReflectiveBuilder,
@@ -31,7 +31,7 @@ public class ContainerBuilderTestBase
         LambdaBuilder = null;
         Builders = new List<IContainerBuilder>();
     }
-    
+
     protected interface IA { }
     protected interface IB { }
     protected interface IC { }

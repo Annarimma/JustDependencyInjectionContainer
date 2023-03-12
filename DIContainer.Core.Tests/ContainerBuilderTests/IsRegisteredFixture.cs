@@ -20,16 +20,16 @@ public class IsRegisteredFixture : ContainerBuilderTestBase
 
             var instance = scope
                 .Resolve<IA>();
-                    
+
             var isRegisteredTypeIA = scope.IsRegistered<IA>();
-                    
+
             instance.Should().NotBeNull();
             instance.Should().BeOfType<Abc>();
 
             isRegisteredTypeIA.Should().Be(true);
         }
     }
-            
+
     [Test]
     public void Instance_ShouldNotBe_RegisteredInScope()
     {
@@ -42,9 +42,9 @@ public class IsRegisteredFixture : ContainerBuilderTestBase
 
             var instance = scope
                 .Resolve<IA>();
-                    
+
             var isRegisteredTypeAbc = scope.IsRegistered<Abc>();
-                    
+
             instance.Should().NotBeNull();
             instance.Should().BeOfType<Abc>();
 

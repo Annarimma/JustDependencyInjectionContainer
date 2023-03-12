@@ -11,7 +11,7 @@ namespace DIContainer.Core.Builders;
 /// <summary>
 /// Abstract class with base build realization.
 /// </summary>
-public abstract class BaseActivationBuilder
+public abstract class BaseActivationBuilder : IActivationBuilder
 {
     /// <summary>
     /// Base build activation.
@@ -23,6 +23,8 @@ public abstract class BaseActivationBuilder
         var serviceMetaInfo = descriptor;
         var implementationType = GetImplementationType(serviceMetaInfo);
         var ctor = GetConstructorInfo(implementationType);
+        if (ctor == null)
+            return s => null;
         var args = ctor.GetParameters();
         return BuildActivationInternal((TypeBasedServiceDescriptor)serviceMetaInfo, ctor, args);
     }

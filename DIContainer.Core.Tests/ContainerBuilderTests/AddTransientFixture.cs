@@ -20,13 +20,13 @@ public class AddTransientFixture : ContainerBuilderTestBase
                 .Build()
                 .CreateScope()
                 .Resolve<IB>();
-                    
+
             instance.Should().NotBeNull();
         }
     }
-    
+
     [Test]
-    public void TransientInstance_ShouldBe_OfCorrectType() 
+    public void TransientInstance_ShouldBe_OfCorrectType()
     {
         foreach (var builder in Builders)
         {
@@ -39,7 +39,7 @@ public class AddTransientFixture : ContainerBuilderTestBase
                 .BeOfType<Abc>();
         }
     }
-    
+
     [Test]
     public void AddSimpleTransientRegistration_ShouldBe_NotNull()
     {
@@ -50,12 +50,12 @@ public class AddTransientFixture : ContainerBuilderTestBase
                 .Build()
                 .CreateScope()
                 .Resolve<Abc>();
-                    
+
             instance.Should().NotBeNull();
             instance.Should().BeOfType<Abc>();
         }
     }
-    
+
     // todo do it more consistently with Abc, IA ...
     [Test]
     public void AddTransientInstances_NotNull()
@@ -84,21 +84,21 @@ public class AddTransientFixture : ContainerBuilderTestBase
                 .AddTransient<IPersonService, PersonService>()
                 .AddTransient<ICarService, CarService>()
                 .Build();
-    
+
             var scope = actualContainer.CreateScope();
-        
+
             var firstExpectedInstance = scope
                 .Resolve<ICarService>();
-            
+
             var secondExpectedInstance = scope
                 .Resolve<ICarService>();
-    
+
             firstExpectedInstance
                 .Should()
                 .NotBeSameAs(secondExpectedInstance);
         }
     }
-    
+
     [Test]
     public void TransientInstancesInScopes_ShouldBe_NotSame()
     {
@@ -109,16 +109,16 @@ public class AddTransientFixture : ContainerBuilderTestBase
                 .AddTransient<IPersonService, PersonService>()
                 .AddTransient<ICarService, CarService>()
                 .Build();
-    
+
             var scope1 = actualContainer.CreateScope();
             var scope2 = actualContainer.CreateScope();
-        
+
             var firstExpectedInstance = scope1
                 .Resolve<ICarService>();
-            
+
             var secondExpectedInstance = scope2
                 .Resolve<ICarService>();
-    
+
             firstExpectedInstance
                 .Should()
                 .NotBeSameAs(secondExpectedInstance);

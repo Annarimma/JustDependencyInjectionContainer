@@ -4,5 +4,4 @@ namespace DIContainer.Sample.Models;
 
 public class Repository : IRepository
 {
-    
 }

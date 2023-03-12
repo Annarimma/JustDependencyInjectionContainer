@@ -1,5 +1,4 @@
 using System;
-using BenchmarkDotNet.Attributes;
 using DIContainer.Core.Builders;
 using DIContainer.Core.Extensions;
 using DIContainer.Core.MetaInfo;
@@ -25,7 +24,7 @@ public class AsFixture : ContainerBuilderTestBase
         result.Should().NotBeNull();
         result.Should().BeOfType(typeof(Abc));
     }
-    
+
     [Test]
     public void RegisterAs_Should_Return_CorrectResult()
     {
@@ -35,7 +34,7 @@ public class AsFixture : ContainerBuilderTestBase
             .As<IA>()
             .Build()
             .CreateScope();
-        
+
         var isRegistered1 = scope.IsRegistered(typeof(Abc));
 
         var result = scope
@@ -45,13 +44,13 @@ public class AsFixture : ContainerBuilderTestBase
         result.Should().BeOfType(typeof(Abc));
         isRegistered1.Should().BeFalse();
     }
-    
+
     [Test]
     public void RegisterNullInstance_Should_ThrowException()
     {
         var builder = ReflectiveBuilder;
         var descriptor = (ServiceMetaInfo)null;
-        
+
         Action act = () => builder.Register(descriptor);
 
         act
@@ -59,17 +58,17 @@ public class AsFixture : ContainerBuilderTestBase
             .Throw<ArgumentNullException>()
             .Where(e => e.Message.Contains(nameof(descriptor)));
     }
-    
+
     // todo Register Type As Unsupported Service should throw Exception
     // [Test]
     // public void RegisterTypeAsUnsupportedService()
     // {
     //     var builder = ReflectiveBuilder;
-    //     
+    //
     //     Action act = () => builder
     //         .Register<object>()
     //         .As<string>();
-    //     
+    //
     //     act
     //         .Should()
     //         .Throw<ArgumentException>();

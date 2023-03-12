@@ -32,6 +32,9 @@ namespace DIContainer.Core.Builders
             public object Resolve(Type @interface)
             {
                 var descriptor = _container.GetDescriptor(@interface);
+                
+                if (descriptor == null)
+                    throw new InjectionException(InjectionException.REGISTRATION_IS_NOT_FOUND);
 
                 if (descriptor.LifeTime == LifeTime.Transient)
                 {
@@ -42,10 +45,8 @@ namespace DIContainer.Core.Builders
                 {
                     return _scopedInstances.GetOrAdd(@interface, s => _container.GetInstance(s, this));
                 }
-                else
-                {
-                    return _container._rootScope.Resolve(@interface);
-                }
+                
+                return _container._rootScope.Resolve(@interface);
             }
 
             #region IDisposable
@@ -54,14 +55,15 @@ namespace DIContainer.Core.Builders
             {
                 foreach (var item in _disposables)
                 {
-                    if (item is IDisposable d)
+                    switch (item)
                     {
-                        d.Dispose();
-                    }
-                    else if (item is IAsyncDisposable ad)
-                    {
-                        // the program may hang.
-                        ad.DisposeAsync().GetAwaiter().GetResult();
+                        case IDisposable d:
+                            d.Dispose();
+                            break;
+                        case IAsyncDisposable ad:
+                            // the program may hang.
+                            ad.DisposeAsync().GetAwaiter().GetResult();
+                            break;
                     }
                 }
             }
@@ -119,7 +121,7 @@ namespace DIContainer.Core.Builders
             {
                 _serviceDescriptors = serviceDescriptors.ToImmutableDictionary(k => k.InterfaceType);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 throw new InjectionException(InjectionException.DEPENDENCY_ALREADY_IS_ADDED);
             }

@@ -16,7 +16,7 @@ public class ServiceDescriptorsFixture : ContainerBuilderTestBase
         var result = instance.ToString();
         result.Should().Be(typeof(IC).ToString());
     }
-    
+
     [Test]
     public void TypeBasedServiceDescriptor_ToString()
     {
@@ -24,7 +24,7 @@ public class ServiceDescriptorsFixture : ContainerBuilderTestBase
         var result = instance.ToString();
         result.Should().Be(typeof(IC).ToString());
     }
-    
+
     // todo this implementation
     // [Test]
     // public void FactoryBasedServiceDescriptor_ToString()

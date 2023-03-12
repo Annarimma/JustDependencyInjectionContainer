@@ -13,7 +13,7 @@ namespace DIContainer.Tests.ContainerBuilderTests;
 public class AddSingletonFixture : ContainerBuilderTestBase
 {
     [Test]
-    public void Container_Should_GetSingletonInstance() 
+    public void Container_Should_GetSingletonInstance()
     {
         foreach (var builder in Builders)
         {
@@ -26,7 +26,7 @@ public class AddSingletonFixture : ContainerBuilderTestBase
                 .BeOfType<Abc>();
         }
     }
-    
+
     [Test]
     public void AddSingleton_TypeBasedRegistration_ShouldReturn_NotNull()
     {
@@ -41,7 +41,7 @@ public class AddSingletonFixture : ContainerBuilderTestBase
                 .NotBeNull();
         }
     }
-    
+
     [Test]
     public void SingletonInstancesFromOneScope_ShouldBe_Same()
     {
@@ -50,21 +50,21 @@ public class AddSingletonFixture : ContainerBuilderTestBase
             var actualContainer = builder
                 .AddSingleton<IA, Abc>()
                 .Build();
-    
+
             var scope = actualContainer.CreateScope();
-        
+
             var firstExpectedInstance = scope
                 .Resolve<IA>();
-        
+
             var secondExpectedInstance = scope
                 .Resolve<IA>();
-            
+
             firstExpectedInstance
                 .Should()
                 .BeSameAs(secondExpectedInstance);
         }
     }
-    
+
     [Test]
     public void SingletonInstancesFromScopes_ShouldBe_Same()
     {
@@ -73,16 +73,16 @@ public class AddSingletonFixture : ContainerBuilderTestBase
             var actualContainer = builder
                 .AddSingleton<IC, Abc>()
                 .Build();
-    
+
             var scope1 = actualContainer.CreateScope();
             var scope2 = actualContainer.CreateScope();
-        
+
             var firstExpectedInstance = scope1
                 .Resolve<IC>();
-        
+
             var secondExpectedInstance = scope2
                 .Resolve<IC>();
-            
+
             firstExpectedInstance
                 .Should()
                 .BeSameAs(secondExpectedInstance);
@@ -104,14 +104,14 @@ public class AddSingletonFixture : ContainerBuilderTestBase
                 .AddSingleton<IA>(typeof(IA))
                 .Build();
         };
-        
+
         act
             .Should()
             .Throw<InjectionException>()
-            .Where(e 
+            .Where(e
                 => e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
     }
-    
+
     [Test]
     public void DuplicationSingleton_InstanceRegistration_Should_ThrowException()
     {
@@ -127,14 +127,14 @@ public class AddSingletonFixture : ContainerBuilderTestBase
                 .AddSingleton<IA>(new Abc())
                 .Build();
         };
-        
+
         act
             .Should()
             .Throw<InjectionException>()
-            .Where(e 
+            .Where(e
                 => e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
     }
-    
+
     [Test]
     public void DuplicationSingleton_LambdaRegistration_Should_ThrowException()
     {
@@ -143,18 +143,18 @@ public class AddSingletonFixture : ContainerBuilderTestBase
         var act = () =>
         {
             builder
-                .AddSingleton(typeof(IA), s => new Abc())
+                .AddSingleton(typeof(IA), _ => new Abc())
                 .Build();
 
             builder
-                .AddSingleton<IA>(s => new Abc())
+                .AddSingleton<IA>(_ => new Abc())
                 .Build();
         };
-        
+
         act
             .Should()
             .Throw<InjectionException>()
-            .Where(e 
+            .Where(e
                 => e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
     }
 }

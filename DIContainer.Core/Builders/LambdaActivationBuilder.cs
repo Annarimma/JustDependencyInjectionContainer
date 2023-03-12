@@ -10,7 +10,7 @@ namespace DIContainer.Core.Builders;
 /// <summary>
 /// Lambda Activation.
 /// </summary>
-public class LambdaActivationBuilder : BaseActivationBuilder, IActivationBuilder
+public class LambdaActivationBuilder : BaseActivationBuilder
 {
     private static readonly MethodInfo ResolveMethod = typeof(IScope).GetMethod("Resolve");
 
