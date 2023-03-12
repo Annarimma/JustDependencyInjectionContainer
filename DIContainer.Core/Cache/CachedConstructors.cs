@@ -9,7 +9,7 @@ namespace DIContainer.Core.Cache
     /// <summary>
     /// Reflection optimization class store cached constructors.
     /// </summary>
-    public static class CachedConstructors
+    internal static class CachedConstructors
     {
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> _cachedConstructors = new();
 

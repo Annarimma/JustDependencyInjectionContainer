@@ -8,7 +8,7 @@ namespace DIContainer.Core.Cache
     /// <summary>
     /// Reflection optimization class store cached constructors parameters.
     /// </summary>
-    public static class CachedParameters
+    internal static class CachedParameters
     {
         private static readonly ConcurrentDictionary<ConstructorInfo, List<ParameterInfo>> _cachedParameters = new();
 
