@@ -23,6 +23,8 @@ public abstract class BaseActivationBuilder : IActivationBuilder
         var serviceMetaInfo = descriptor;
         var implementationType = GetImplementationType(serviceMetaInfo);
         var ctor = GetConstructorInfo(implementationType);
+        if (ctor == null)
+            return s => null;
         var args = ctor.GetParameters();
         return BuildActivationInternal((TypeBasedServiceDescriptor)serviceMetaInfo, ctor, args);
     }
