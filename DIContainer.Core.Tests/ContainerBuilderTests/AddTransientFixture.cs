@@ -31,14 +31,12 @@ public class AddTransientFixture : ContainerBuilderTestBase
         foreach (var builder in Builders)
         {
             builder
-                .AddTransient<IPersonService, PersonService>()
-                .AddTransient<IRandomGuidService, RandomGuidService>()
-                .AddTransient<ICarService, CarService>()
+                .AddTransient<IB>(typeof(Abc))
                 .Build()
                 .CreateScope()
-                .Resolve<ICarService>()
+                .Resolve<IB>()
                 .Should()
-                .BeOfType<CarService>();
+                .BeOfType<Abc>();
         }
     }
     
