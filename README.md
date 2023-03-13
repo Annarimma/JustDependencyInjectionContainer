@@ -8,8 +8,8 @@ This README.md is my summary of the DI Container and a description of my project
 ## :star: Features
 - [x] Creating instances of classes and manages their lifetime.
 - [x] Resolving all instances from scope, not directly from container.
-- [x] Register [Singletons](#1-singletons) life time.
-- [x] Register [Transient](#2-addtransient) life time.
+- [x] Register [Singleton](#1-singletons) life time.
+- [x] Register [Transient](#2-transients) life time.
 - [x] Register [Scoped](#3-addscoped) life time.
 - [x] Simple registration with transient life time by default: ```Register<Service>()```
 - [x] [As](#5-as) method support.
@@ -125,7 +125,7 @@ builder.AddSingleton<IRepository>(new Repository());
 - **Heavily used lookup classes** such as **read-only caches** which do not change through the application lifetime once initialized.
 
 - - -
-#### 2. AddTransient
+#### 2. Transients
 
 Just Dependency Container supports a Transient lifetime. It can create a new instance every time a request is made to the container.
 
@@ -145,6 +145,16 @@ builder.AddTransient<IService, Service>();
 builder.AddTransient(typeof(IService), s => new Service());
 builder.AddTransient<IService>(s => new Service());
 ```
+**Use Cases:**
+- Lightweight, short-lived objects
+
+**Pros:**
+- Can accept singletons and scoped instances in constructor.
+- If implementing IDisposable, the container will look after this.
+
+**Cons:**
+- Be careful of doing any 'heavy' work in the constructor.
+
 - - -
 #### 3. AddScoped
 
@@ -166,6 +176,11 @@ builder.AddScoped<IService, Service>();
 builder.AddScoped(typeof(IService), s => new Service());
 builder.AddScoped<IService>(s => new Service());
 ```
+
+How it works:
+- Should be accessed from the scope container.
+- If implementing IDisposable, the container looks after the disposal of the project if it created the instance.
+
 - - -
 #### 4. Register
 
@@ -187,9 +202,9 @@ Resolving a component is roughly equivalent to calling “new” to instantiate 
 
 | From ↓ Into → | Transient | Scoped | Singleton |
 |---------------|-----------|--------|-----------|
-|Transient      |    [x]    |    x   |     x     |
-|Scoped         |    [x]    |   [x]  |     x     |
-|Singleton      |    [x]    |   [x]  |    [x]    |
+|Transient      |    ✓      |   X    |     X     |
+|Scoped         |    ✓      |   ✓    |     X     |
+|Singleton      |    ✓      |   ✓    |    ✓     |
 
 MSDI creates a 'Captured Dependency' where the shorter lifetime object is trapped for the lifetime of the longer lived object.
 
@@ -199,6 +214,7 @@ Only happens by default if environment is development.
 Can set manually for other environments, but there is a performance hit, so the advice is not to do it.
 
 ### Possible Problems
+
 #### Singletons
 
 A read-write singleton needs to be made thread-safe as no guarantees who will call it and how it will be called.
