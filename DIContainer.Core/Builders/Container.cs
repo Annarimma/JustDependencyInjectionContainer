@@ -114,7 +114,16 @@ namespace DIContainer.Core.Builders
         public Container(IEnumerable<ServiceMetaInfo> serviceDescriptors, IActivationBuilder builder)
         {
             _builder = builder;
-            _serviceDescriptors = serviceDescriptors.ToImmutableDictionary(k => k.InterfaceType);
+
+            try
+            {
+                _serviceDescriptors = serviceDescriptors.ToImmutableDictionary(k => k.InterfaceType);
+            }
+            catch (ArgumentException e)
+            {
+                throw new InjectionException(InjectionException.DEPENDENCY_ALREADY_IS_ADDED);
+            }
+
             _rootScope = new Scope(this);
         }
 
