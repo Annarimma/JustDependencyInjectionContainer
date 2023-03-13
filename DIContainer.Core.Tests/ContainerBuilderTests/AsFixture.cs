@@ -1,5 +1,4 @@
 using System;
-using BenchmarkDotNet.Attributes;
 using DIContainer.Core.Builders;
 using DIContainer.Core.Extensions;
 using DIContainer.Core.MetaInfo;
