@@ -53,9 +53,9 @@ var ICInstance = new ContainerBuilder()
     .Resolve<IC>();
 ```
 
-## :star:  Documentation
-- - -
-### ContainerBuilder()
+## Documentation
+
+### :star: ContainerBuilder()
 
 Instance to be created through reflection by default.
 ```csharp
@@ -66,16 +66,16 @@ var builder = new ContainerBuilder();
 You can pass the next args to Container builder to customise building process:
 ```csharp
 // Create your builder. ReflectionActivationBuilder() is be using as default.
-ReflectiveBuilder = new ContainerBuilder(new ReflectionActivationBuilder());
+var reflectiveBuilder = new ContainerBuilder(new ReflectionActivationBuilder());
 // You also can use the equivalent: 
 var builder = new ContainerBuilder();
 
 // Create your builder with LambdaActivationBuilder.
-LambdaBuilder = new ContainerBuilder(new LambdaActivationBuilder());
+var lambdaBuilder = new ContainerBuilder(new LambdaActivationBuilder());
 ```
 - - -
-### Registration Concepts
-- - -
+### :star: Registration
+
 #### 1. AddSingleton
 ```csharp
 // Context.
@@ -114,14 +114,16 @@ builder.AddScoped<IService, Service>();
 - - -
 #### 4. Register
 
+- - -
 #### 5. As
 
-### Build()
+- - -
+### :star: Build()
 
-### CreateScope() and using
+### :star: CreateScope() and using
 
-### Resolve()
+### :star: Resolve()
 Resolving a component is roughly equivalent to calling “new” to instantiate a class.
 
 
-### Handle disposing
+### :star: Handle disposing
