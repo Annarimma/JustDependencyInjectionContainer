@@ -15,5 +15,13 @@ namespace DIContainer.Core.ErrorHandler
             : base(message, innerException)
         {
         }
+
+        public InjectionException() : base()
+        {
+        }
+
+        public InjectionException(string message) : base(message)
+        {
+        }
     }
 }

@@ -19,8 +19,6 @@ Console.WriteLine($"First sample result should return instance of Repository typ
 
 #endregion
 
-
-
 #region Sample 2
 
 var ICInstance = new ContainerBuilder()
@@ -36,5 +34,3 @@ interface IC {}
 interface ID {}
 
 #endregion
-
-    
