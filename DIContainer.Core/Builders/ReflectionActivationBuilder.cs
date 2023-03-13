@@ -15,7 +15,7 @@ namespace DIContainer.Core.Builders;
 /// using reflection to select and invoke a constructor
 /// based on the available service registrations.
 /// </summary>
-public class ReflectionActivationBuilder : BaseActivationBuilder, IActivationBuilder
+public class ReflectionActivationBuilder : BaseActivationBuilder
 {
     protected override Func<IScope, object> BuildActivationInternal(
         TypeBasedServiceDescriptor typeDescriptor,

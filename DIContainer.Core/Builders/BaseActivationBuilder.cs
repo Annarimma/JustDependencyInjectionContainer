@@ -11,7 +11,7 @@ namespace DIContainer.Core.Builders;
 /// <summary>
 /// Abstract class with base build realization.
 /// </summary>
-public abstract class BaseActivationBuilder
+public abstract class BaseActivationBuilder : IActivationBuilder
 {
     /// <summary>
     /// Base build activation.
