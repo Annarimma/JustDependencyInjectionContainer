@@ -25,6 +25,9 @@ public static class ScopedExtensions
     /// <returns>True, if type is registered.</returns>
     public static bool IsRegistered<TInterface>(this IScope scope)
     {
+        if (scope == null)
+            throw new System.ArgumentNullException(nameof(scope));
+
         return scope.IsRegistered(typeof(TInterface));
     }
 }
