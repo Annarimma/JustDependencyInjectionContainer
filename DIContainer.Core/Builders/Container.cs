@@ -119,7 +119,7 @@ namespace DIContainer.Core.Builders
             {
                 _serviceDescriptors = serviceDescriptors.ToImmutableDictionary(k => k.InterfaceType);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 throw new InjectionException(InjectionException.DEPENDENCY_ALREADY_IS_ADDED);
             }
