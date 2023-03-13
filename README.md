@@ -39,17 +39,31 @@ var instance = new ContainerBuilder()
 ### Sample 2
 ```csharp
 // Create your builder.
-var ICInstance = new ContainerBuilder()
+var instance = new ContainerBuilder()
     // Register your Service as transient by default.
-    .Register<CD>()
+    .Register<Service>()
     // Register your IService type.
-    .As<IC>()
+    .As<IService>()
     // Build your container.
     .Build()
     // Create a new Scope.
     .CreateScope()
     // Resolve IService and create a instance.
     .Resolve<IC>();
+```
+- - -
+### Sample 3
+```csharp
+// Create your builder.
+var instance = new ContainerBuilder()
+    // Register your dependencies.
+    .AddSingleton<IService>(new Service())
+    // Build your container.
+    .Build()
+    // Create a new Scope.
+    .CreateScope()
+    // Resolve IService and create a instance.
+    .Resolve<IService>();
 ```
 
 ## Documentation
