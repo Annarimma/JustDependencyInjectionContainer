@@ -26,6 +26,21 @@ public static class FactoryBasedExtensions
     }
 
     /// <summary>
+    /// Singleton registration.
+    /// </summary>
+    /// <param name="builder">Container builder.</param>
+    /// <param name="factory">Factory.</param>
+    /// <typeparam name="TInterface">Interface type.</typeparam>
+    /// <returns>Container Builder.</returns>
+    public static IContainerBuilder AddSingleton<TInterface>(
+        this IContainerBuilder builder,
+        Func<IScope, object> factory)
+        where TInterface : class
+    {
+        return builder.RegisterFactory(typeof(TInterface), factory, LifeTime.Singleton);
+    }
+
+    /// <summary>
     /// Transient registration.
     /// </summary>
     /// <param name="builder">Container builder.</param>
@@ -41,6 +56,20 @@ public static class FactoryBasedExtensions
     }
 
     /// <summary>
+    /// Transient registration.
+    /// </summary>
+    /// <param name="builder">Container builder.</param>
+    /// <param name="factory">Factory..</param>
+    /// <typeparam name="TInterface">Type of Interface.</typeparam>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
+    public static IContainerBuilder AddTransient<TInterface>(
+        this IContainerBuilder builder,
+        Func<IScope, object> factory)
+    {
+        return builder.RegisterFactory(typeof(TInterface), factory, LifeTime.Transient);
+    }
+
+    /// <summary>
     /// Scoped registration.
     /// </summary>
     /// <param name="builder">Container builder.</param>
@@ -53,6 +82,20 @@ public static class FactoryBasedExtensions
         Func<IScope, object> factory)
     {
         return builder.RegisterFactory(@interface, factory, LifeTime.Scoped);
+    }
+
+    /// <summary>
+    /// Scoped registration.
+    /// </summary>
+    /// <param name="builder">Container builder.</param>
+    /// <param name="factory">Factory.</param>
+    /// <typeparam name="TInterface">Type of Interface.</typeparam>
+    /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
+    public static IContainerBuilder AddScoped<TInterface>(
+        this IContainerBuilder builder,
+        Func<IScope, object> factory)
+    {
+        return builder.RegisterFactory(typeof(TInterface), factory, LifeTime.Scoped);
     }
 
     /// <summary>
