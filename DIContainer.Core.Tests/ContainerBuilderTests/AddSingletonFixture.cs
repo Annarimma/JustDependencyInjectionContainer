@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
+using DIContainer.Core.Abstraction;
+using DIContainer.Core.Builders;
 using DIContainer.Core.ErrorHandler;
 using DIContainer.Core.Extensions;
 using DIContainer.Tests.ContainerBuilderTests.Base;
-using DIContainer.Tests.TestContext.Abstractions;
-using DIContainer.Tests.TestContext.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -148,10 +149,30 @@ public class AddSingletonFixture : ContainerBuilderTestBase
                 .Build();
         };
 
-        act
-            .Should()
-            .Throw<InjectionException>()
-            .Where(e
-                => e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
-    }
+		act
+			.Should()
+			.Throw<InjectionException>()
+			.Where(e
+				=> e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
+	}
+
+	[Test]
+	public void AddNullSingletonInstance_Should_ThrowException()
+	{
+		var builder = new ContainerBuilder();
+		var act1 = () => builder.AddSingleton(typeof(object), (object)null);
+		var act2 = () => builder.AddSingleton<object>((object)null);
+
+		var list = new List<Func<IContainerBuilder>>()
+		{
+			act1, act2
+		};
+
+		foreach(var act in list)
+		{
+			act
+			.Should()
+			.Throw<ArgumentNullException>();
+		}
+	}
 }

@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace DIContainer.Tests.TestContext.Abstractions
+namespace DIContainer.Tests.TestContext.Abstractions;
+
+public interface ICarService
 {
-    public interface ICarService
-    {
-        public Guid RandomGuid { get; set; }
-    }
+    public Guid RandomGuid { get; set; }
 }

@@ -26,6 +26,15 @@ public class LambdaActivationBuilder : BaseActivationBuilder
         ConstructorInfo ctor,
         ParameterInfo[] args)
     {
+        if (typeDescriptor == null)
+            throw new ArgumentNullException(nameof(typeDescriptor));
+
+        if (ctor == null)
+            throw new ArgumentNullException(nameof(ctor));
+
+        if (args == null)
+            throw new ArgumentNullException(nameof(args));
+
         var scopedParameter = Expression.Parameter(typeof(IScope), "scope");
         var ctorArgs = args
             .Select(x =>

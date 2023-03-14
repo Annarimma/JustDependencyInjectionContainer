@@ -15,7 +15,7 @@ public static class FactoryBasedExtensions
 	/// </summary>
 	/// <param name="builder">Container builder.</param>
 	/// <param name="interface">Type of Interface.</param>
-	/// <param name="factory">Factory.</param>
+	/// <param name="factory">The delegate to register.</param>
 	/// <returns><see cref="IContainerBuilder"/>Container Builder.</returns>
 	public static IContainerBuilder AddSingleton(
 		this IContainerBuilder builder,
@@ -38,12 +38,12 @@ public static class FactoryBasedExtensions
 	/// Singleton registration.
 	/// </summary>
 	/// <param name="builder">Container builder.</param>
-	/// <param name="factory">Factory.</param>
+	/// <param name="factory">The delegate to register.</param>
 	/// <typeparam name="TInterface">Interface type.</typeparam>
 	/// <returns>Container Builder.</returns>
 	public static IContainerBuilder AddSingleton<TInterface>(
 		this IContainerBuilder builder,
-		Func<IScope, object> factory)
+		Func<IScope, TInterface> factory)
 		where TInterface : class
 	{
 		if (builder == null)
@@ -60,7 +60,7 @@ public static class FactoryBasedExtensions
 	/// </summary>
 	/// <param name="builder">Container builder.</param>
 	/// <param name="interface">Type of Interface.</param>
-	/// <param name="factory">Factory.</param>
+	/// <param name="factory">The delegate to register.</param>
 	/// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
 	public static IContainerBuilder AddTransient(
 		this IContainerBuilder builder,
@@ -83,7 +83,7 @@ public static class FactoryBasedExtensions
 	/// Transient registration.
 	/// </summary>
 	/// <param name="builder">Container builder.</param>
-	/// <param name="factory">Factory..</param>
+	/// <param name="factory">The delegate to register.</param>
 	/// <typeparam name="TInterface">Type of Interface.</typeparam>
 	/// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
 	public static IContainerBuilder AddTransient<TInterface>(
@@ -104,7 +104,7 @@ public static class FactoryBasedExtensions
 	/// </summary>
 	/// <param name="builder">Container builder.</param>
 	/// <param name="interface">Type of Interface.</param>
-	/// <param name="factory">Factory.</param>
+	/// <param name="factory">The delegate to register.</param>
 	/// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
 	public static IContainerBuilder AddScoped(
 		this IContainerBuilder builder,
@@ -127,7 +127,7 @@ public static class FactoryBasedExtensions
 	/// Scoped registration.
 	/// </summary>
 	/// <param name="builder">Container builder.</param>
-	/// <param name="factory">Factory.</param>
+	/// <param name="factory">The delegate to register.</param>
 	/// <typeparam name="TInterface">Type of Interface.</typeparam>
 	/// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
 	public static IContainerBuilder AddScoped<TInterface>(
@@ -148,7 +148,7 @@ public static class FactoryBasedExtensions
     /// </summary>
     /// <param name="builder">Container builder.</param>
     /// <param name="interface">Type of Interface.</param>
-    /// <param name="factory">Factory.</param>
+    /// <param name="factory">The delegate to register.</param>
     /// <param name="lifeTime">Life Time.</param>
     /// <returns><see cref="IContainerBuilder"/> - Container Builder.</returns>
     private static IContainerBuilder RegisterFactory(

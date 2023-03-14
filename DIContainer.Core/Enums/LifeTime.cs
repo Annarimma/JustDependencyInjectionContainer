@@ -1,12 +1,11 @@
-﻿namespace DIContainer.Core.Enums
+﻿namespace DIContainer.Core.Enums;
+
+/// <summary>
+/// Instance life time.
+/// </summary>
+public enum LifeTime
 {
-    /// <summary>
-    /// Instance life time.
-    /// </summary>
-    public enum LifeTime
-    {
-        Singleton,
-        Transient,
-        Scoped,
-    }
+    Singleton,
+    Transient,
+    Scoped,
 }
