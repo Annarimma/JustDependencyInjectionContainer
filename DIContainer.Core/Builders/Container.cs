@@ -196,31 +196,31 @@ public class Container : IContainer
 	/// </summary>
 	/// <returns>Delegate.</returns>
 	private Func<IScope, object> BuildActivation(Type @interface)
-{
-	if (@interface == null)
-		throw new ArgumentNullException(nameof(@interface));
-
-	var descriptor = GetDescriptor(@interface);
-
-	switch (descriptor)
 	{
-		case InstanceBasedServiceDescriptor instanceDescriptor:
-			return _ => instanceDescriptor.Instance;
-		case FactoryBasedServiceDescriptor factoryDescriptor:
-			return factoryDescriptor.Factory;
+		if (@interface == null)
+			throw new ArgumentNullException(nameof(@interface));
+
+		var descriptor = GetDescriptor(@interface);
+
+		switch (descriptor)
+		{
+			case InstanceBasedServiceDescriptor instanceDescriptor:
+				return _ => instanceDescriptor.Instance;
+			case FactoryBasedServiceDescriptor factoryDescriptor:
+				return factoryDescriptor.Factory;
+		}
+
+		return _builder.BuildActivation(descriptor);
 	}
 
-	return _builder.BuildActivation(descriptor);
-}
-
-/// <summary>
-/// Returns service descriptor of the specified interface.
-/// </summary>
-/// <param name="interface">Type of interface.</param>
-/// <returns>Descriptor.</returns>
-/// <exception cref="ArgumentNullException">When type is null.</exception>
-/// <exception cref="InjectionException">When interface doesn't register.</exception>
-private ServiceMetaInfo GetDescriptor(Type @interface)
+	/// <summary>
+	/// Returns service descriptor of the specified interface.
+	/// </summary>
+	/// <param name="interface">Type of interface.</param>
+	/// <returns>Descriptor.</returns>
+	/// <exception cref="ArgumentNullException">When type is null.</exception>
+	/// <exception cref="InjectionException">When interface doesn't register.</exception>
+	private ServiceMetaInfo GetDescriptor(Type @interface)
 	{
 		if (@interface == null)
 		{
