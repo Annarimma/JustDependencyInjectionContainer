@@ -97,8 +97,7 @@ public class AddSingletonFixture : ContainerBuilderTestBase
         var act = () =>
         {
             builder
-                .AddSingleton(typeof(IA), typeof(Abc))
-                .Build();
+                .AddSingleton(typeof(IA), typeof(Abc));
 
             builder
                 .AddSingleton<IA>(typeof(IA))
@@ -120,8 +119,7 @@ public class AddSingletonFixture : ContainerBuilderTestBase
         var act = () =>
         {
             builder
-                .AddSingleton(typeof(IA), new Abc())
-                .Build();
+                .AddSingleton(typeof(IA), new Abc());
 
             builder
                 .AddSingleton<IA>(new Abc())
@@ -143,8 +141,7 @@ public class AddSingletonFixture : ContainerBuilderTestBase
         var act = () =>
         {
             builder
-                .AddSingleton(typeof(IA), _ => new Abc())
-                .Build();
+                .AddSingleton(typeof(IA), _ => new Abc());
 
             builder
                 .AddSingleton<IA>(_ => new Abc())
