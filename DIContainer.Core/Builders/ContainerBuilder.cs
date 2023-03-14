@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using DIContainer.Core.Abstraction;
 using DIContainer.Core.Enums;
 using DIContainer.Core.ErrorHandler;
@@ -32,7 +31,7 @@ namespace DIContainer.Core.Builders
 		/// <param name="builder">Activation builder.</param>
 		public ContainerBuilder(IActivationBuilder builder)
 		{
-			_builder = builder;
+			_builder = builder ?? throw new ArgumentNullException(nameof(builder));
 		}
 
 		/// <summary>
@@ -51,7 +50,7 @@ namespace DIContainer.Core.Builders
 				throw new InjectionException(InjectionException.BUILD_SHOULD_BE_CALLED_ONCE);
 			}
 
-        	_wasBuilt = true;
+			_wasBuilt = true;
 
 			return new Container(_serviceDescriptors, _builder);
 		}
@@ -93,7 +92,8 @@ namespace DIContainer.Core.Builders
 		/// <exception cref="ArgumentNullException">If Service information is null.</exception>
 		public IContainerBuilder Register(ServiceMetaInfo descriptor)
 		{
-			if (descriptor == null) throw new ArgumentNullException(nameof(descriptor));
+			if (descriptor == null) 
+				throw new ArgumentNullException(nameof(descriptor));
 			_serviceDescriptors.Add(descriptor);
 			return this;
 		}

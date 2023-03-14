@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -20,6 +19,9 @@ namespace DIContainer.Core.Cache
         /// <returns>Constructor Info.</returns>
         public static ConstructorInfo GetOrAddConstructor(Type implementationType)
         {
+            if (implementationType == null)
+                throw new ArgumentNullException(nameof(implementationType));
+
             if (_cachedConstructors.TryGetValue(implementationType, out var constructor))
             {
                 return constructor;
@@ -29,9 +31,7 @@ namespace DIContainer.Core.Cache
                 .GetConstructors(BindingFlags.Public | BindingFlags.Instance)
                 .Single();
 
-            constructor = _cachedConstructors[implementationType];
-
-            return constructor;
+            return _cachedConstructors[implementationType];
         }
     }
 }

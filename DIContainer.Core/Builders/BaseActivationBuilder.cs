@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using DIContainer.Core.Abstraction;
 using DIContainer.Core.Cache;
@@ -20,6 +19,9 @@ public abstract class BaseActivationBuilder : IActivationBuilder
     /// <returns>Creation Delegate.</returns>
     public Func<IScope, object> BuildActivation(ServiceMetaInfo descriptor)
     {
+        if (descriptor == null)
+            throw new ArgumentNullException(nameof(descriptor));
+
         var serviceMetaInfo = descriptor;
         var implementationType = GetImplementationType(serviceMetaInfo);
         var ctor = GetConstructorInfo(implementationType);
@@ -49,6 +51,9 @@ public abstract class BaseActivationBuilder : IActivationBuilder
     /// <exception cref="InjectionException">Then Interface or Abstract Class can't be instantiated.</exception>
     protected Type GetImplementationType(ServiceMetaInfo descriptor)
     {
+        if (descriptor == null)
+            throw new ArgumentNullException(nameof(descriptor));
+
         var typeDescriptor = (TypeBasedServiceDescriptor)descriptor;
         var instanceType = typeDescriptor.InstanceType;
 
@@ -62,7 +67,9 @@ public abstract class BaseActivationBuilder : IActivationBuilder
 
     protected ConstructorInfo GetConstructorInfo(Type implementationType)
     {
-        var constructorInfo = CachedConstructors.GetOrAddConstructor(implementationType);
-        return constructorInfo;
+        if (implementationType == null)
+            throw new ArgumentNullException(nameof(implementationType));
+
+        return CachedConstructors.GetOrAddConstructor(implementationType);
     }
 }

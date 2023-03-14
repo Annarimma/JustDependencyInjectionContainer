@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using DIContainer.Core.Abstraction;
 using DIContainer.Core.Cache;
 using DIContainer.Core.MetaInfo;
@@ -22,6 +19,15 @@ public class ReflectionActivationBuilder : BaseActivationBuilder
         ConstructorInfo ctor,
         ParameterInfo[] args)
     {
+        if (typeDescriptor == null)
+            throw new ArgumentNullException(nameof(typeDescriptor));
+
+        if (ctor == null)
+            throw new ArgumentNullException(nameof(ctor));
+
+        if (args == null)
+            throw new ArgumentNullException(nameof(args));
+
         var implementationType = GetImplementationType(typeDescriptor);
         return scope => GetImplementation(scope, implementationType);
     }
@@ -36,9 +42,10 @@ public class ReflectionActivationBuilder : BaseActivationBuilder
     private object GetImplementation(IScope scope, Type implementationType)
     {
         if (scope == null)
-        {
             throw new ArgumentNullException(nameof(scope));
-        }
+
+        if (implementationType == null)
+            throw new ArgumentNullException(nameof(implementationType));
 
         var constructorInfo = GetConstructorInfo(implementationType);
 
@@ -47,7 +54,6 @@ public class ReflectionActivationBuilder : BaseActivationBuilder
             .Select(x => scope.Resolve(x.ParameterType))
             .ToArray();
 
-        var implementation = constructorInfo.Invoke(parameters);
-        return implementation;
+        return constructorInfo.Invoke(parameters);
     }
 }

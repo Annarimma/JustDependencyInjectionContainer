@@ -14,6 +14,9 @@ namespace DIContainer.Core.Cache
 
         public static IEnumerable<ParameterInfo> GetParameters(ConstructorInfo constructorInfo)
         {
+            if (constructorInfo == null)
+                throw new System.ArgumentNullException(nameof(constructorInfo));
+
             if (_cachedParameters
                 .TryGetValue(constructorInfo, out var parameterInfo))
             {
@@ -24,9 +27,7 @@ namespace DIContainer.Core.Cache
                 .GetParameters()
                 .ToList();
 
-            parameterInfo = _cachedParameters[constructorInfo];
-
-            return parameterInfo;
+            return _cachedParameters[constructorInfo];
         }
     }
 }
