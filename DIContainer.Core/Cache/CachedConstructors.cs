@@ -3,35 +3,34 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
 
-namespace DIContainer.Core.Cache
+namespace DIContainer.Core.Cache;
+
+/// <summary>
+/// Reflection optimization class store cached constructors.
+/// </summary>
+internal static class CachedConstructors
 {
+    private static readonly ConcurrentDictionary<Type, ConstructorInfo> _cachedConstructors = new();
+
     /// <summary>
-    /// Reflection optimization class store cached constructors.
+    /// Get a stored contractor info or add a new one.
     /// </summary>
-    internal static class CachedConstructors
+    /// <param name="implementationType">Implementation Type.</param>
+    /// <returns>Constructor Info.</returns>
+    public static ConstructorInfo GetOrAddConstructor(Type implementationType)
     {
-        private static readonly ConcurrentDictionary<Type, ConstructorInfo> _cachedConstructors = new();
+        if (implementationType == null)
+            throw new ArgumentNullException(nameof(implementationType));
 
-        /// <summary>
-        /// Get a stored contractor info or add a new one.
-        /// </summary>
-        /// <param name="implementationType">Implementation Type.</param>
-        /// <returns>Constructor Info.</returns>
-        public static ConstructorInfo GetOrAddConstructor(Type implementationType)
+        if (_cachedConstructors.TryGetValue(implementationType, out var constructor))
         {
-            if (implementationType == null)
-                throw new ArgumentNullException(nameof(implementationType));
-
-            if (_cachedConstructors.TryGetValue(implementationType, out var constructor))
-            {
-                return constructor;
-            }
-
-            _cachedConstructors[implementationType] = implementationType
-                .GetConstructors(BindingFlags.Public | BindingFlags.Instance)
-                .Single();
-
-            return _cachedConstructors[implementationType];
+            return constructor;
         }
+
+        _cachedConstructors[implementationType] = implementationType
+            .GetConstructors(BindingFlags.Public | BindingFlags.Instance)
+            .Single();
+
+        return _cachedConstructors[implementationType];
     }
 }

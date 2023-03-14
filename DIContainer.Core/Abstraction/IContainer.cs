@@ -1,16 +1,15 @@
 ﻿using System;
 
-namespace DIContainer.Core.Abstraction
+namespace DIContainer.Core.Abstraction;
+
+/// <summary>
+/// Dependencies managing container interface.
+/// </summary>
+public interface IContainer : IDisposable, IAsyncDisposable
 {
     /// <summary>
-    /// Dependencies managing container interface.
+    /// Creating instance scope.
     /// </summary>
-    public interface IContainer : IDisposable, IAsyncDisposable
-    {
-        /// <summary>
-        /// Creating instance scope.
-        /// </summary>
-        /// <returns><see cref="IScope"/> - Created scope.</returns>
-        IScope CreateScope();
-    }
+    /// <returns><see cref="IScope"/> - Created scope.</returns>
+    IScope CreateScope();
 }

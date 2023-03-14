@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace DIContainer.Tests.TestContext.Abstractions
+namespace DIContainer.Tests.TestContext.Abstractions;
+
+public interface IRandomGuidService
 {
-    public interface IRandomGuidService
-    {
-        Guid RandomGuid { get; }
-    }
+    Guid RandomGuid { get; }
 }
