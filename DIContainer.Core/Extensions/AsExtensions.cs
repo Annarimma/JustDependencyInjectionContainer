@@ -13,6 +13,9 @@ public static class AsExtensions
     public static IContainerBuilder As<TService>(this IContainerBuilder builder)
         where TService : notnull
     {
+        if (builder == null)
+            throw new System.ArgumentNullException(nameof(builder));
+
         return builder.As(typeof(TService));
     }
 }
