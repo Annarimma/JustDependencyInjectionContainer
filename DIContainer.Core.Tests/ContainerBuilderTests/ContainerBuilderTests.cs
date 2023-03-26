@@ -46,6 +46,6 @@ internal class ContainerBuilderTests : ContainerBuilderTestBase
 		act
 			.Should()
 			.Throw<InjectionException>()
-			.WithMessage(InjectionException.BUILD_SHOULD_BE_CALLED_ONCE);
+			.WithMessage(InjectionException.BuildShouldBeCalledOnce);
 	}
 }

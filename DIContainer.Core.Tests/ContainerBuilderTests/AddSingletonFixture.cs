@@ -109,7 +109,7 @@ internal class AddSingletonFixture : ContainerBuilderTestBase
             .Should()
             .Throw<InjectionException>()
             .Where(e
-                => e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
+                => e.Message.Contains(InjectionException.DependencyAlreadyIsAdded));
     }
 
     [Test]
@@ -131,7 +131,7 @@ internal class AddSingletonFixture : ContainerBuilderTestBase
             .Should()
             .Throw<InjectionException>()
             .Where(e
-                => e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
+                => e.Message.Contains(InjectionException.DependencyAlreadyIsAdded));
     }
 
     [Test]
@@ -153,7 +153,7 @@ internal class AddSingletonFixture : ContainerBuilderTestBase
 			.Should()
 			.Throw<InjectionException>()
 			.Where(e
-				=> e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
+				=> e.Message.Contains(InjectionException.DependencyAlreadyIsAdded));
 	}
 
 	[Test]

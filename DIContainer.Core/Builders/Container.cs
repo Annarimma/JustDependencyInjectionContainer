@@ -37,7 +37,7 @@ public class Container : IContainer
 			var descriptor = _container.GetDescriptor(@interface);
 
 			if (descriptor == null)
-				throw new InjectionException(InjectionException.REGISTRATION_IS_NOT_FOUND);
+				throw new InjectionException(InjectionException.RegistrationIsNotFound);
 
 			if (descriptor.LifeTime == LifeTime.Transient)
 			{
@@ -135,7 +135,7 @@ public class Container : IContainer
 		}
 		catch (ArgumentException)
 		{
-			throw new InjectionException(InjectionException.DEPENDENCY_ALREADY_IS_ADDED);
+			throw new InjectionException(InjectionException.DependencyAlreadyIsAdded);
 		}
 
 		_rootScope = new Scope(this);
@@ -229,7 +229,7 @@ public class Container : IContainer
 
 		if (!_serviceDescriptors.TryGetValue(@interface, out var descriptor))
 		{
-			throw new InjectionException(string.Format(InjectionException.MISSING_DEPENDENCY, @interface));
+			throw new InjectionException(string.Format(InjectionException.MissingDependency, @interface));
 		}
 
 		return descriptor;
