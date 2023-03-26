@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace DIContainer.Tests.ContainerBuilderTests;
 
 [TestFixture]
-public class ServiceDescriptorsFixture : ContainerBuilderTestBase
+internal class ServiceDescriptorsFixture : ContainerBuilderTestBase
 {
     [Test]
     public void InstanceBasedServiceDescriptor_ToString()

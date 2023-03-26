@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace DIContainer.Tests.ContainerBuilderTests;
 
 [TestFixture]
-public class AddSingletonFixture : ContainerBuilderTestBase
+internal class AddSingletonFixture : ContainerBuilderTestBase
 {
     [Test]
     public void Container_Should_GetSingletonInstance()

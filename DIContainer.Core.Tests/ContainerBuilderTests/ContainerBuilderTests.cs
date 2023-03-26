@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace DIContainer.Tests.ContainerBuilderTests;
 
 [TestFixture]
-public class ContainerBuilderTests : ContainerBuilderTestBase
+internal class ContainerBuilderTests : ContainerBuilderTestBase
 {
 	[Test]
 	public void ContainerBuilder_ShouldNot_RegisterNull()

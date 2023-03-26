@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace DIContainer.Tests.ContainerBuilderTests;
 
 [TestFixture]
-public class DisposeFixture : ContainerBuilderTestBase
+internal class DisposeFixture : ContainerBuilderTestBase
 {
     [Test]
     public void ScopeIsDisposed_And_SingletonInstancesAreNot_Disposed()
