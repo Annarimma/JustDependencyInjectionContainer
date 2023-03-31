@@ -47,7 +47,7 @@ public sealed class ContainerBuilder : IContainerBuilder
 	{
 		if (_wasBuilt)
 		{
-			throw new InjectionException(InjectionException.BUILD_SHOULD_BE_CALLED_ONCE);
+			throw new InjectionException(InjectionException.BuildShouldBeCalledOnce);
 		}
 
 		_wasBuilt = true;

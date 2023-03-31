@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace DIContainer.Tests.ContainerBuilderTests;
 
 [TestFixture]
-public class AddScopedFixture : ContainerBuilderTestBase
+internal class AddScopedFixture : ContainerBuilderTestBase
 {
     [Test]
     public void Container_Should_GetScopedInstance()

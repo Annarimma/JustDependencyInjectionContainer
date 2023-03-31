@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace DIContainer.Tests.ContainerBuilderTests;
 
 [TestFixture]
-public class AddSingletonFixture : ContainerBuilderTestBase
+internal class AddSingletonFixture : ContainerBuilderTestBase
 {
     [Test]
     public void Container_Should_GetSingletonInstance()
@@ -109,7 +109,7 @@ public class AddSingletonFixture : ContainerBuilderTestBase
             .Should()
             .Throw<InjectionException>()
             .Where(e
-                => e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
+                => e.Message.Contains(InjectionException.DependencyAlreadyIsAdded));
     }
 
     [Test]
@@ -131,7 +131,7 @@ public class AddSingletonFixture : ContainerBuilderTestBase
             .Should()
             .Throw<InjectionException>()
             .Where(e
-                => e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
+                => e.Message.Contains(InjectionException.DependencyAlreadyIsAdded));
     }
 
     [Test]
@@ -153,7 +153,7 @@ public class AddSingletonFixture : ContainerBuilderTestBase
 			.Should()
 			.Throw<InjectionException>()
 			.Where(e
-				=> e.Message.Contains(InjectionException.DEPENDENCY_ALREADY_IS_ADDED));
+				=> e.Message.Contains(InjectionException.DependencyAlreadyIsAdded));
 	}
 
 	[Test]

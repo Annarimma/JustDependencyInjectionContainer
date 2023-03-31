@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace DIContainer.Tests.ContainerBuilderTests;
 
 [TestFixture]
-public class IsRegisteredFixture : ContainerBuilderTestBase
+internal class IsRegisteredFixture : ContainerBuilderTestBase
 {
     [Test]
     public void Interface_ShouldBe_RegisteredInScope()

@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace DIContainer.Tests.ContainerBuilderTests;
 
 [TestFixture]
-public class AsFixture : ContainerBuilderTestBase
+internal class AsFixture : ContainerBuilderTestBase
 {
     [Test]
     public void Register_ShouldReturn_CorrectResult()

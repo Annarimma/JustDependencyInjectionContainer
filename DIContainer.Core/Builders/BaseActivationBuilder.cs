@@ -59,7 +59,7 @@ public abstract class BaseActivationBuilder : IActivationBuilder
 
         if (instanceType.IsAbstract || instanceType.IsInterface)
         {
-            throw new InjectionException(InjectionException.CANNOT_INSTANTIATE_INTERFACE);
+            throw new InjectionException(InjectionException.CanNotInstantiateInterface);
         }
 
         return instanceType;

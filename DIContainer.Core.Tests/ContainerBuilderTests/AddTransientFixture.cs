@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace DIContainer.Tests.ContainerBuilderTests;
 
 [TestFixture]
-public class AddTransientFixture : ContainerBuilderTestBase
+internal class AddTransientFixture : ContainerBuilderTestBase
 {
     [Test]
     public void TransientInstance_ShouldBe_NotNull()

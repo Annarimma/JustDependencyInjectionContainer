@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace DIContainer.Tests.ContainerBuilderTests;
 
 [TestFixture]
-public class ContainerBuilderTests : ContainerBuilderTestBase
+internal class ContainerBuilderTests : ContainerBuilderTestBase
 {
 	[Test]
 	public void ContainerBuilder_ShouldNot_RegisterNull()
@@ -46,6 +46,6 @@ public class ContainerBuilderTests : ContainerBuilderTestBase
 		act
 			.Should()
 			.Throw<InjectionException>()
-			.WithMessage(InjectionException.BUILD_SHOULD_BE_CALLED_ONCE);
+			.WithMessage(InjectionException.BuildShouldBeCalledOnce);
 	}
 }

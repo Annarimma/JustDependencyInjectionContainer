@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace DIContainer.Tests.ContainerBuilderTests.Base;
 
-public class ContainerBuilderTestBase
+internal class ContainerBuilderTestBase
 {
 	protected IEnumerable<IContainerBuilder> Builders;
 	protected IContainerBuilder ReflectiveBuilder;
