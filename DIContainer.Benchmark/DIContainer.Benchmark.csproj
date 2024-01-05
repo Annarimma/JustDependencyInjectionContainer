@@ -13,7 +13,7 @@
 
     <ItemGroup>
       <PackageReference Include="Autofac" Version="7.0.0" />
-      <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
+      <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     </ItemGroup>
 
